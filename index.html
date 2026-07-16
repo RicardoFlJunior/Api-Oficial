@@ -443,8 +443,20 @@
   .crit-list li .c{color:var(--orange);flex:none;}
 
   /* footer */
-  footer{background:var(--ink);color:#fff;padding:70px 0 40px;}
-  .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.12);}
+  /* Última página: o Jadibô saiu do meio da seção e foi para a linha do
+     rodapé, junto do BSP — por isso a seção e o rodapé perderam o excesso
+     de respiro que antes ficava vazio. */
+  #conclusao{padding-bottom:48px;}
+  footer{background:var(--ink);color:#fff;padding:40px 0 30px;}
+  .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.12);}
+  .footer-bsp{font-family:var(--font-mono);font-size:12px;color:#9FB3D6;}
+  .footer-jadibo{display:flex;justify-content:center;}
+  /* no rodapé o botão fica fora de section.dark: reaplica o tratamento
+     escuro (sem isso o rótulo cairia para --slate, ~1.6:1 sobre o --ink)
+     e vira linha, para alinhar com o logo e o BSP na mesma altura */
+  footer .info-btn-bottom{flex-direction:row;align-items:center;gap:13px;margin:0;}
+  footer .info-btn-bottom img{filter:drop-shadow(0 0 2px rgba(255,255,255,.5)) drop-shadow(0 8px 20px rgba(0,0,0,.4));}
+  footer .info-btn-bottom .robo-label{color:#B9C9E6;}
 
   /* closing CTAs (last page) */
   .cta-row{display:flex;flex-wrap:wrap;gap:16px;margin-top:40px;}
@@ -473,7 +485,7 @@
     display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;
     font-family:var(--font-mono);font-weight:700;font-size:15px;padding:9px 16px;border-radius:20px;
   }
-  footer .fnote{font-size:15px;color:#8FA8CE;margin-top:44px;font-family:var(--font-mono);}
+  footer .fnote{font-size:15px;color:#8FA8CE;margin-top:26px;font-family:var(--font-mono);}
 
   .to-top{
     position:fixed;right:26px;bottom:26px;width:46px;height:46px;border-radius:50%;
@@ -1120,7 +1132,7 @@
         <div class="cat-body">
           <div class="desc">Confirmação de pedidos, avisos, atualização de status e lembretes.</div>
           <div class="mini-bubble"><span class="mini-tag" style="background:var(--blue);">UTILITY</span><p>Seu pedido #4821 saiu para entrega hoje.</p></div>
-          <div class="quote-row"><span class="quote-price">$0.02</span><span class="quote-unit">/ mensagem</span></div>
+          <div class="quote-row"><span class="quote-price">$0.0068</span><span class="quote-unit">/ mensagem</span></div>
           <div class="quote-note">cotação de referência*</div>
         </div>
       </div>
@@ -1132,7 +1144,7 @@
         <div class="cat-body">
           <div class="desc">Promoções, campanhas, novidades e divulgação de produtos.</div>
           <div class="mini-bubble"><span class="mini-tag" style="background:var(--orange);">MARKETING</span><p>Fim de semana com 20% OFF em toda loja!</p></div>
-          <div class="quote-row"><span class="quote-price">$0.08</span><span class="quote-unit">/ mensagem</span></div>
+          <div class="quote-row"><span class="quote-price">$0.0625</span><span class="quote-unit">/ mensagem</span></div>
           <div class="quote-note">cotação de referência*</div>
         </div>
       </div>
@@ -1144,7 +1156,7 @@
         <div class="cat-body">
           <div class="desc">Envio de códigos, confirmação de login e autenticação em dois fatores.</div>
           <div class="mini-bubble"><span class="mini-tag" style="background:var(--blue);">AUTH</span><p>Seu código de verificação é 482 913.</p></div>
-          <div class="quote-row"><span class="quote-price">$0.025</span><span class="quote-unit">/ mensagem</span></div>
+          <div class="quote-row"><span class="quote-price">$0.0068</span><span class="quote-unit">/ mensagem</span></div>
           <div class="quote-note">cotação de referência*</div>
         </div>
       </div>
@@ -1513,7 +1525,7 @@
 </section>
 
 <!-- 15/16 CONCLUSAO -->
-<section class="dark" id="conclusao" data-station="14" data-label="Conclusão">
+<section class="dark" id="conclusao" data-station="14" data-label="Conclusão" data-jadibo-slot="footerJadiboSlot">
   <div class="wrap">
     <div class="sec-head">
       <div>
@@ -1549,7 +1561,9 @@
   <div class="wrap">
     <div class="footer-top">
       <div class="footer-logo"><span class="brand-logo" role="img" aria-label="IP Solution"></span></div>
-      <div style="font-family:var(--font-mono);font-size:12px;color:#9FB3D6;">BSP Oficial Meta — Painel de Migração v1.0</div>
+      <!-- o Jadibô da última seção é montado aqui pelo app.js (data-jadibo-slot) -->
+      <div class="footer-jadibo" id="footerJadiboSlot"></div>
+      <div class="footer-bsp">BSP Oficial Meta — Painel de Migração v1.0</div>
     </div>
     <div class="fnote">Documento elaborado pela IP Solution para orientar clientes na migração para a API Oficial do WhatsApp. Valores e políticas comerciais são definidos pela Meta e podem ser alterados a qualquer momento.</div>
   </div>
@@ -1788,7 +1802,10 @@
     btn.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
 
     if(section && mascotSrc){
-      const wrap = section.querySelector('.wrap') || section;
+      // a section can redirect its Jadibô elsewhere via data-jadibo-slot
+      // (the last section mounts it in the footer row, beside the BSP line)
+      const slot = section.dataset.jadiboSlot ? document.getElementById(section.dataset.jadiboSlot) : null;
+      const wrap = slot || section.querySelector('.wrap') || section;
       const bottom = document.createElement('button');
       bottom.type = 'button';
       bottom.className = 'info-btn-bottom' + (section.classList.contains('dark') ? ' on-dark' : '');
