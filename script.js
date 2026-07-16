@@ -74,15 +74,171 @@
 
   toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
-  // ---- FAQ toggles ----
-  document.querySelectorAll('.info-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const panel = document.getElementById(btn.dataset.faq);
-      const willOpen = !panel.classList.contains('open');
-      panel.classList.toggle('open', willOpen);
-      btn.classList.toggle('active', willOpen);
-      btn.setAttribute('aria-expanded', String(willOpen));
+  // ---- per-topic info popups ----
+  const TOPIC_DATA = {
+    'sem-grupos': {
+      icon: '👥',
+      title: 'Sem grupos',
+      body: 'Não ser possível participar ou criar grupos é uma das regras estabelecidas pela própria Meta para a API Oficial. Porém, com a IP Solution é possível criar grupos internos ou utilizar o recurso de "sussurro" para adicionar vários colaboradores a uma mesma conversa, sem que o cliente perceba a troca de atendente.'
+    },
+    'resposta-cliente': {
+      icon: '⏱',
+      title: 'Resposta do cliente',
+      body: 'A janela de 24 horas só abre depois que o cliente responde ao template. Na plataforma da IP Solution é possível visualizar quanto tempo falta para esse prazo se esgotar, ajudando a equipe a se organizar antes que a janela feche.'
+    },
+    'sem-edicao': {
+      icon: '✎',
+      title: 'Sem edição ou exclusão',
+      body: 'Mensagens enviadas não podem ser editadas ou apagadas depois do envio — essa também é uma regra definida diretamente pela Meta, válida para todos os BSPs, e não algo específico da IP Solution.'
+    },
+    'cobrancas': {
+      icon: '$',
+      title: 'Cobranças recorrentes',
+      body: 'Os valores são definidos e cobrados diretamente pela Meta, de acordo com a categoria da mensagem enviada. A IP Solution não define nem adiciona qualquer margem sobre essas cobranças.'
+    },
+    'limites-envio': {
+      icon: '📈',
+      title: 'Limites de envio',
+      body: 'Os limites diários de envio são definidos automaticamente pela Meta, conforme a qualidade e a reputação do número. Manter boas práticas de envio ajuda a aumentar esses limites com o tempo.'
+    },
+    'historico-conversas': {
+      icon: '📄',
+      title: 'Histórico de conversas',
+      body: 'Veja a seção "Reinício do histórico de conversas", logo a seguir, para entender por que isso acontece e como se preparar para a migração.'
+    },
+    'documentacao': {
+      icon: '💼',
+      title: 'Documentação empresarial',
+      body: 'É por meio desses dados que a Meta valida se a empresa está regularizada e com todas as informações cadastrais corretas antes de liberar o uso da API Oficial.'
+    },
+    'presenca-digital-crit': {
+      icon: '🌐',
+      title: 'Presença digital',
+      body: 'As verificações empresariais da Meta são feitas consultando o site institucional e as páginas oficiais da empresa — por isso é importante que essas informações estejam atualizadas e consistentes entre os canais.'
+    },
+    'contato-financeiro': {
+      icon: '💳',
+      title: 'Contato e financeiro',
+      body: 'Telefone e e-mail corporativo podem ser usados pela Meta para possíveis verificações, como o envio de um código de confirmação. Já o cartão Visa ou Mastercard é usado para a cobrança das mensagens, debitado automaticamente conforme a cotação vigente.'
+    },
+    'acesso-verificacao': {
+      icon: '🔒',
+      title: 'Acesso e verificação',
+      body: 'Esses itens são necessários porque deixam o Portfólio Empresarial mais seguro e completo, liberando o uso pleno da API Oficial junto à Meta.'
+    }
+  };
+
+  const topicModalOverlay = document.getElementById('topicModalOverlay');
+  const topicModalIcon = document.getElementById('topicModalIcon');
+  const topicModalTitle = document.getElementById('topicModalTitle');
+  const topicModalBody = document.getElementById('topicModalBody');
+  const topicModalClose = document.getElementById('topicModalClose');
+
+  function openTopicModal(key){
+    const data = TOPIC_DATA[key];
+    if(!data) return;
+    topicModalIcon.textContent = data.icon;
+    topicModalTitle.textContent = data.title;
+    topicModalBody.textContent = data.body;
+    topicModalOverlay.classList.add('open');
+  }
+  function closeTopicModal(){
+    topicModalOverlay.classList.remove('open');
+  }
+  document.querySelectorAll('.topic-info-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      openTopicModal(btn.dataset.topic);
     });
+  });
+  topicModalClose.addEventListener('click', closeTopicModal);
+  topicModalOverlay.addEventListener('click', (e)=>{ if(e.target === topicModalOverlay) closeTopicModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeTopicModal(); });
+
+  // ---- robot FAQ pop-up (modal) ----
+  const faqModalOverlay = document.getElementById('faqModalOverlay');
+  const faqModalBody = document.getElementById('faqModalBody');
+  const faqModalTitle = document.getElementById('faqModalTitle');
+  const faqModalMascot = document.getElementById('faqModalMascot');
+  const faqModalClose = document.getElementById('faqModalClose');
+
+  function openFaqModal(faqId, mascotSrc, title){
+    const panel = document.getElementById(faqId);
+    if(!panel) return;
+    const inner = panel.querySelector('.faq-inner');
+    faqModalBody.innerHTML = inner ? inner.innerHTML : '';
+    faqModalTitle.textContent = title || 'Dúvidas frequentes';
+    if(mascotSrc) faqModalMascot.src = mascotSrc;
+    faqModalOverlay.classList.add('open');
+  }
+  function closeFaqModal(){ faqModalOverlay.classList.remove('open'); }
+  faqModalClose.addEventListener('click', closeFaqModal);
+  faqModalOverlay.addEventListener('click', (e)=>{ if(e.target === faqModalOverlay) closeFaqModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFaqModal(); });
+
+  // ---- info robots: top button + a larger generated bottom button both open the pop-up ----
+  document.querySelectorAll('.info-btn').forEach(btn=>{
+    const section = btn.closest('section');
+    const faqId = btn.dataset.faq;
+    const mascotImg = btn.querySelector('.mascot-icon');
+    const mascotSrc = mascotImg ? mascotImg.getAttribute('src') : '';
+    const titleEl = section ? section.querySelector('.sec-title') : null;
+    const title = titleEl ? titleEl.textContent.trim() : 'Dúvidas frequentes';
+
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
+
+    if(section && mascotSrc){
+      const wrap = section.querySelector('.wrap') || section;
+      const bottom = document.createElement('button');
+      bottom.type = 'button';
+      bottom.className = 'info-btn-bottom' + (section.classList.contains('dark') ? ' on-dark' : '');
+      bottom.setAttribute('aria-label', 'Abrir dúvidas frequentes');
+      const bimg = document.createElement('img');
+      bimg.src = mascotSrc;
+      bimg.alt = 'Robô de dúvidas';
+      const label = document.createElement('span');
+      label.className = 'robo-label';
+      label.innerHTML = 'Ficou com dúvidas? <b>Clique no Jadibô</b>';
+      bottom.appendChild(bimg);
+      bottom.appendChild(label);
+      bottom.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
+      wrap.appendChild(bottom);
+    }
+  });
+
+  // ---- info carousels (client pages through the cards with prev/next) ----
+  document.querySelectorAll('[data-carousel]').forEach(car=>{
+    const track = car.querySelector('.carousel-track');
+    const slides = Array.from(car.querySelectorAll('.carousel-slide'));
+    const prev = car.querySelector('[data-dir="prev"]');
+    const next = car.querySelector('[data-dir="next"]');
+    const dotsWrap = car.querySelector('.carousel-dots');
+    const curEl = car.querySelector('.carousel-counter .cur');
+    const totEl = car.querySelector('.carousel-counter .tot');
+    if(!track || slides.length === 0) return;
+    let idx = 0;
+    if(totEl) totEl.textContent = slides.length;
+
+    const dots = slides.map((_, i)=>{
+      const d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'carousel-dot';
+      d.setAttribute('aria-label', 'Ir para o item ' + (i + 1));
+      d.addEventListener('click', ()=> go(i));
+      if(dotsWrap) dotsWrap.appendChild(d);
+      return d;
+    });
+
+    function go(i){
+      idx = (i + slides.length) % slides.length;
+      track.style.transform = 'translateX(' + (-idx * 100) + '%)';
+      dots.forEach((d, k)=> d.classList.toggle('active', k === idx));
+      if(curEl) curEl.textContent = idx + 1;
+    }
+    if(prev) prev.addEventListener('click', ()=> go(idx - 1));
+    if(next) next.addEventListener('click', ()=> go(idx + 1));
+    go(0);
   });
 
   // ---- scroll reveal ----
@@ -93,7 +249,8 @@
     '.howto', '.risk-col', '.col-official', '.col-unofficial', '.phone',
     '.compare > *'
   ];
-  const revealEls = Array.from(document.querySelectorAll(revealSelectors.join(',')));
+  const revealEls = Array.from(document.querySelectorAll(revealSelectors.join(',')))
+    .filter(el=> !el.closest('.info-carousel')); // carousel slides manage their own visibility
   revealEls.forEach(el=>{
     if(el.closest('.hero')) return; // hero content animates on load, not on scroll
     el.classList.add('reveal');
@@ -166,14 +323,14 @@
       new Chart(alcadaEl, {
         type:'doughnut',
         data:{
-          labels:['Definido pela Meta','Alçada da IP Solution'],
-          datasets:[{data:[100,0.001], backgroundColor:['#FF6A13','#1565D8'], borderWidth:0, spacing:2}]
+          labels:['Definido pela Meta'],
+          datasets:[{data:[100], backgroundColor:['#FF6A13'], borderWidth:0}]
         },
         options:{
-          cutout:'72%',
+          cutout:'0%',
           plugins:{
-            legend:{labels:{color:'#E6EDF9', font:{size:11.5}, boxWidth:12, padding:16}},
-            tooltip:{callbacks:{label:(ctx)=> ctx.label + ': ' + (ctx.dataIndex===0?'100%':'0%')}}
+            legend:{labels:{color:'#E6EDF9', font:{size:14.4}, boxWidth:12, padding:16}},
+            tooltip:{callbacks:{label:(ctx)=> ctx.label + ': 100%'}}
           }
         }
       });
@@ -197,8 +354,8 @@
         options:{
           plugins:{legend:{display:false}},
           scales:{
-            x:{grid:{display:false}, ticks:{color:'#5B6472', font:{size:10.5}}},
-            y:{grid:{color:'#E1E6EE'}, ticks:{color:'#5B6472', font:{size:10.5}}}
+            x:{grid:{display:false}, ticks:{color:'#5B6472', font:{size:13.1}}},
+            y:{grid:{color:'#E1E6EE'}, ticks:{color:'#5B6472', font:{size:13.1}}}
           }
         }
       });
