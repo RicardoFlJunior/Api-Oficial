@@ -383,4 +383,5 @@
   }
   if(typeof Chart !== 'undefined'){ initCharts(); }
   else { window.addEventListener('load', initCharts); }
+  
 })();
