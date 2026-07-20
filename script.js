@@ -64,7 +64,18 @@
       const r = sec.getBoundingClientRect();
       if(r.top < window.innerHeight*0.5) activeIdx = i;
     });
-    dots.forEach((d,i)=> d.classList.toggle('active', i===activeIdx));
+    // seções já percorridas continuam preenchidas; a atual ganha o anel.
+    // a linha: cheia nos segmentos passados, pela metade no segmento atual,
+    // para a trilha terminar exatamente na bolinha em que o leitor está.
+    dots.forEach((d,i)=>{
+      d.classList.toggle('done', i < activeIdx);
+      d.classList.toggle('active', i === activeIdx);
+      const wrap = d.parentElement;
+      if(wrap){
+        wrap.classList.toggle('done', i < activeIdx);
+        wrap.classList.toggle('current', i === activeIdx);
+      }
+    });
     readout.textContent = String(activeIdx+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
     mobileNavReadout.textContent = String(activeIdx+1).padStart(2,'0') + '/' + String(total).padStart(2,'0');
     mobileNavItems.forEach((it,i)=> it.classList.toggle('active', i===activeIdx));
@@ -176,12 +187,18 @@
   faqModalOverlay.addEventListener('click', (e)=>{ if(e.target === faqModalOverlay) closeFaqModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFaqModal(); });
 
+  // Imagem do Jadibô: embutida em base64 UMA única vez no HTML (#jadiboSrc),
+  // em vez de repetida nas 14 seções. Todos os robôs saem desta fonte.
+  const jadiboEl = document.getElementById('jadiboSrc');
+  const jadiboSrc = jadiboEl ? jadiboEl.getAttribute('src') : '';
+
   // ---- info robots: top button + a larger generated bottom button both open the pop-up ----
   document.querySelectorAll('.info-btn').forEach(btn=>{
     const section = btn.closest('section');
     const faqId = btn.dataset.faq;
     const mascotImg = btn.querySelector('.mascot-icon');
-    const mascotSrc = mascotImg ? mascotImg.getAttribute('src') : '';
+    // usa a fonte única; cai para o src do próprio botão se ele existir
+    const mascotSrc = jadiboSrc || (mascotImg ? mascotImg.getAttribute('src') : '');
     const titleEl = section ? section.querySelector('.sec-title') : null;
     const title = titleEl ? titleEl.textContent.trim() : 'Dúvidas frequentes';
 
@@ -189,7 +206,10 @@
     btn.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
 
     if(section && mascotSrc){
-      const wrap = section.querySelector('.wrap') || section;
+      // a section can redirect its Jadibô elsewhere via data-jadibo-slot
+      // (the last section mounts it in the footer row, beside the BSP line)
+      const slot = section.dataset.jadiboSlot ? document.getElementById(section.dataset.jadiboSlot) : null;
+      const wrap = slot || section.querySelector('.wrap') || section;
       const bottom = document.createElement('button');
       bottom.type = 'button';
       bottom.className = 'info-btn-bottom' + (section.classList.contains('dark') ? ' on-dark' : '');
