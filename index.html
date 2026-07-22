@@ -278,7 +278,7 @@
       <div>
         <div class="kicker">Ponto de atenção</div>
         <h2 class="sec-title">Reinício do histórico de conversas</h2>
-        <p class="sec-sub">Ao migrar o número para a API Oficial, as conversas anteriores não são transferidas para a nova plataforma — o atendimento passa a registrar um novo histórico a partir da ativação.</p>
+        <p class="sec-sub">Esta é uma característica da própria infraestrutura da Meta, e não uma limitação do processo de migração: ao ativar a API Oficial, o número passa a operar em um ambiente próprio da Meta, separado do WhatsApp Business tradicional, e o atendimento passa a registrar um novo histórico a partir da ativação.</p>
       </div>
       <button class="info-btn" data-faq="faq-historico" aria-expanded="false"><img class="mascot-icon" alt="Duvidas frequentes"><span class="think-badge" aria-hidden="true">?</span></button>
     </div>
@@ -295,11 +295,12 @@
             <div class="callout">
               <div class="carousel-slide-tag">Contexto</div>
               <h4>Por que isso acontece?</h4>
-              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:18px;">A API Oficial roda em uma infraestrutura própria da Meta, separada do aplicativo WhatsApp Business tradicional. Por isso, mensagens trocadas antes da migração ficam apenas no dispositivo original e não acompanham o número na nova plataforma.</p>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:14px;">A separação de histórico é definida pela própria Meta, responsável pela tecnologia por trás do WhatsApp — não é uma decisão ou limitação da IP Solution. A API Oficial opera em uma infraestrutura própria da Meta, dedicada a empresas, totalmente apartada do aplicativo WhatsApp Business tradicional.</p>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:18px;">Por se tratar de dois ambientes distintos dentro do ecossistema Meta, as mensagens trocadas antes da ativação permanecem apenas no dispositivo original: hoje não existe, por parte da Meta, um mecanismo oficial de importação desse histórico para a nova plataforma. Esse comportamento é padrão para qualquer empresa que migre para a API Oficial, independentemente do provedor de tecnologia escolhido.</p>
               <ul>
-                <li><span class="bullet-dot"></span> Recomendamos exportar as conversas importantes antes de iniciar a migração</li>
-                <li><span class="bullet-dot"></span> Novas conversas, a partir da ativação, ficam registradas normalmente na API Oficial</li>
-                <li><span class="bullet-dot"></span> A equipe pode ser orientada previamente para reduzir impacto na rotina</li>
+                <li><span class="bullet-dot"></span> Orientamos exportar as conversas importantes antes de iniciar a migração, como medida preventiva</li>
+                <li><span class="bullet-dot"></span> A partir da ativação, todas as novas conversas passam a ser registradas normalmente na API Oficial</li>
+                <li><span class="bullet-dot"></span> A equipe de atendimento pode ser orientada previamente, reduzindo o impacto na rotina de trabalho</li>
               </ul>
             </div>
           </div>
@@ -519,6 +520,11 @@
         <div class="faq-item"><div class="q">Posso reenviar um template rejeitado?</div><div class="a">Sim, após corrigir o conteúdo apontado pela Meta como violação de política, um novo template pode ser enviado para análise.</div></div>
         <div class="faq-item"><div class="q">O prazo de 24h é garantido?</div><div class="a">É uma média observada — em períodos de alta demanda a análise da Meta pode levar um pouco mais.</div></div>
       </div>
+    </div>
+    <div class="callout" style="margin-bottom:28px;">
+      <h4>💬 &nbsp;O que é um template de mensagens?</h4>
+      <p style="font-size:15.62px;color:var(--slate);line-height:1.6;">Um template é um modelo de mensagem pré-escrito, submetido e aprovado pela Meta, usado sempre que é a <b>empresa</b> quem inicia a conversa — e não o cliente respondendo a um atendimento em andamento. Na prática, funciona como um formulário: existe um texto fixo, que não muda, e alguns campos variáveis (como o nome do cliente ou o número de um pedido) que são preenchidos automaticamente a cada envio.</p>
+      <p style="font-size:15.62px;color:var(--slate);line-height:1.6;">Essa exigência é uma política da própria Meta, criada para evitar spam e proteger a experiência de quem usa o WhatsApp — por isso, toda empresa que opera na API Oficial precisa passar por esse processo de aprovação antes de poder enviar esse tipo de mensagem. As três etapas abaixo mostram como isso funciona na prática.</p>
     </div>
     <div class="info-carousel step-carousel" data-carousel>
       <div class="carousel-viewport">
@@ -831,7 +837,7 @@
       <div class="robot-guide-step" id="robotGuideStep">ETAPA 01 DE 14</div>
       <strong id="robotGuideTitle">Objetivo do documento</strong>
       <p id="robotGuideText"></p>
-      <button class="robot-guide-help" type="button" id="robotGuideHelp"> Ver dúvidas desta etapa</button>
+      <button class="robot-guide-help" type="button" id="robotGuideHelp">? Ver dúvidas desta etapa</button>
       <div class="robot-guide-actions">
         <button type="button" id="robotGuidePrev">← Anterior</button>
         <button type="button" id="robotGuideNext">Próxima →</button>
