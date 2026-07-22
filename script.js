@@ -1,9 +1,161 @@
 (function(){
+  // ---- presentation utilities ----
+  const presentBtn = document.getElementById('presentBtn');
+  const printBtn = document.getElementById('printBtn');
+
+  presentBtn?.addEventListener('click', async ()=>{
+    try {
+      if(!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      else await document.exitFullscreen();
+    } catch (_) {
+      presentBtn.title = 'Tela cheia não disponível neste navegador';
+    }
+  });
+  document.addEventListener('fullscreenchange', ()=>{
+    if(!presentBtn) return;
+    const active = Boolean(document.fullscreenElement);
+    presentBtn.classList.toggle('active', active);
+    presentBtn.querySelector('span').textContent = active ? 'Sair da tela cheia' : 'Apresentar';
+  });
+  printBtn?.addEventListener('click', ()=> window.print());
+
   // ---- build station rail ----
   const sections = Array.from(document.querySelectorAll('section[data-station]'));
   const railScroll = document.getElementById('railScroll');
   const readout = document.getElementById('railReadout');
   const total = sections.length;
+
+  // ---- guided spotlight: the robot explains the current stage ----
+  const robotGuide = document.getElementById('robotGuide');
+  const robotGuideToggle = document.getElementById('robotGuideToggle');
+  const robotGuideClose = document.getElementById('robotGuideClose');
+  const robotGuideImage = document.getElementById('robotGuideImage');
+  const robotGuideStep = document.getElementById('robotGuideStep');
+  const robotGuideTitle = document.getElementById('robotGuideTitle');
+  const robotGuideText = document.getElementById('robotGuideText');
+  const robotGuideHelp = document.getElementById('robotGuideHelp');
+  const robotGuideIntro = document.getElementById('robotGuideIntro');
+  const robotGuideContent = document.getElementById('robotGuideContent');
+  const robotGuideEnable = document.getElementById('robotGuideEnable');
+  const robotGuideDisable = document.getElementById('robotGuideDisable');
+  const robotGuideFaq = document.getElementById('robotGuideFaq');
+  const robotGuideFaqTitle = document.getElementById('robotGuideFaqTitle');
+  const robotGuideFaqBody = document.getElementById('robotGuideFaqBody');
+  const robotGuideBack = document.getElementById('robotGuideBack');
+  const robotGuidePause = document.getElementById('robotGuidePause');
+  const robotGuideRestart = document.getElementById('robotGuideRestart');
+  const summaryStartGuide = document.getElementById('summaryStartGuide');
+  const robotGuidePrev = document.getElementById('robotGuidePrev');
+  const robotGuideNext = document.getElementById('robotGuideNext');
+  let guideIndex = 0;
+  let guideEnabled = false;
+  let guidePaused = false;
+  let guideMode = 'section';
+  let guideFaqTarget = null;
+
+  const guideCopy = sections.map(sec=>({
+    title: sec.querySelector('.sec-title')?.textContent.trim() || sec.dataset.label,
+    text: sec.querySelector('.sec-sub')?.textContent.trim() || `Nesta etapa, entenda os pontos essenciais sobre ${sec.dataset.label.toLowerCase()}.`
+  }));
+
+  function setGuideOpen(open){
+    robotGuide?.classList.toggle('open', open);
+    robotGuideToggle?.setAttribute('aria-expanded', String(open));
+    document.querySelectorAll('.guide-focus,.guide-faq-focus').forEach(el=>el.classList.remove('guide-focus','guide-faq-focus'));
+    if(open && guideEnabled){
+      if(guideMode === 'faq' && guideFaqTarget) guideFaqTarget.classList.add('guide-faq-focus');
+      else sections[guideIndex]?.classList.add('guide-focus');
+    }
+  }
+  function updateGuide(index, scroll=false){
+    guideIndex = Math.max(0, Math.min(index, total-1));
+    const sec = sections[guideIndex];
+    const copy = guideCopy[guideIndex];
+    robotGuideStep.textContent = `ETAPA ${String(guideIndex+1).padStart(2,'0')} DE ${String(total).padStart(2,'0')}`;
+    robotGuideTitle.textContent = copy.title;
+    robotGuideText.textContent = copy.text;
+    robotGuidePrev.disabled = guideIndex === 0;
+    robotGuideNext.disabled = guideIndex === total-1;
+    if(scroll) sec.scrollIntoView({behavior:'smooth',block:'start'});
+    if(robotGuide?.classList.contains('open')) setGuideOpen(true);
+  }
+  function showGuideIntro(){
+    guideEnabled = false;
+    guideMode = 'intro';
+    robotGuideIntro.hidden = false;
+    robotGuideContent.hidden = true;
+    robotGuideFaq.hidden = true;
+    robotGuide.classList.remove('faq-mode');
+    setGuideOpen(true);
+  }
+  function enableGuide(){
+    guideEnabled = true;
+    guidePaused = false;
+    guideMode = 'section';
+    robotGuideIntro.hidden = true;
+    robotGuideContent.hidden = false;
+    robotGuideFaq.hidden = true;
+    updateGuide(0,true);
+    setGuideOpen(true);
+  }
+  robotGuideToggle?.addEventListener('click',()=>{
+    if(guidePaused){
+      guidePaused = false;
+      guideEnabled = true;
+      guideMode = 'section';
+      robotGuideIntro.hidden = true;
+      robotGuideFaq.hidden = true;
+      robotGuideContent.hidden = false;
+      setGuideOpen(true);
+    }
+    else if(!robotGuide.classList.contains('open') && !guideEnabled) showGuideIntro();
+    else setGuideOpen(!robotGuide.classList.contains('open'));
+  });
+  robotGuideClose?.addEventListener('click',()=>setGuideOpen(false));
+  robotGuideEnable?.addEventListener('click',enableGuide);
+  robotGuideDisable?.addEventListener('click',()=>setGuideOpen(false));
+  summaryStartGuide?.addEventListener('click',enableGuide);
+  robotGuidePause?.addEventListener('click',()=>{
+    guidePaused = true;
+    guideEnabled = false;
+    setGuideOpen(false);
+    robotGuideToggle.title = 'Retomar guia';
+  });
+  robotGuideRestart?.addEventListener('click',enableGuide);
+  robotGuidePrev?.addEventListener('click',()=>updateGuide(guideIndex-1,true));
+  robotGuideNext?.addEventListener('click',()=>updateGuide(guideIndex+1,true));
+  robotGuideHelp?.addEventListener('click',()=>{
+    const helpButton = sections[guideIndex]?.querySelector('.info-btn[data-faq]');
+    setGuideOpen(false);
+    helpButton?.click();
+  });
+  function showFaqInGuide(target, faqId, title){
+    const panel = document.getElementById(faqId);
+    const inner = panel?.querySelector('.faq-inner');
+    if(!inner) return;
+    guideEnabled = true;
+    guideMode = 'faq';
+    guideFaqTarget = target;
+    robotGuideIntro.hidden = true;
+    robotGuideContent.hidden = true;
+    robotGuideFaq.hidden = false;
+    robotGuideFaqTitle.textContent = title || 'Dúvidas desta etapa';
+    robotGuideFaqBody.innerHTML = inner.innerHTML;
+    robotGuide.classList.add('faq-mode');
+    target.scrollIntoView({behavior:'smooth',block:'center'});
+    setGuideOpen(true);
+  }
+  robotGuideBack?.addEventListener('click',()=>{
+    guideMode = 'section';
+    guideFaqTarget = null;
+    robotGuideFaq.hidden = true;
+    robotGuideContent.hidden = false;
+    robotGuide.classList.remove('faq-mode');
+    updateGuide(guideIndex,true);
+    setGuideOpen(true);
+  });
+  updateGuide(0);
+  setTimeout(()=>{ if(!guideEnabled && !guidePaused) showGuideIntro(); },900);
 
   sections.forEach(sec=>{
     const wrap = document.createElement('div');
@@ -79,6 +231,7 @@
     readout.textContent = String(activeIdx+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
     mobileNavReadout.textContent = String(activeIdx+1).padStart(2,'0') + '/' + String(total).padStart(2,'0');
     mobileNavItems.forEach((it,i)=> it.classList.toggle('active', i===activeIdx));
+    if(activeIdx !== guideIndex) updateGuide(activeIdx);
   }
   document.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
@@ -148,6 +301,7 @@
   function openTopicModal(key){
     const data = TOPIC_DATA[key];
     if(!data) return;
+    setGuideOpen(false);
     topicModalIcon.textContent = data.icon;
     topicModalTitle.textContent = data.title;
     topicModalBody.textContent = data.body;
@@ -176,6 +330,7 @@
   function openFaqModal(faqId, mascotSrc, title){
     const panel = document.getElementById(faqId);
     if(!panel) return;
+    setGuideOpen(false);
     const inner = panel.querySelector('.faq-inner');
     faqModalBody.innerHTML = inner ? inner.innerHTML : '';
     faqModalTitle.textContent = title || 'Dúvidas frequentes';
@@ -203,7 +358,7 @@
     const title = titleEl ? titleEl.textContent.trim() : 'Dúvidas frequentes';
 
     btn.setAttribute('aria-expanded', 'false');
-    btn.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
+    btn.addEventListener('click', ()=> showFaqInGuide(btn, faqId, title));
 
     if(section && mascotSrc){
       // a section can redirect its Jadibô elsewhere via data-jadibo-slot
@@ -222,7 +377,7 @@
       label.innerHTML = 'Ficou com dúvidas? <b>Clique no Jadibô</b>';
       bottom.appendChild(bimg);
       bottom.appendChild(label);
-      bottom.addEventListener('click', ()=> openFaqModal(faqId, mascotSrc, title));
+      bottom.addEventListener('click', ()=> showFaqInGuide(bottom, faqId, title));
       wrap.appendChild(bottom);
     }
   });
@@ -335,7 +490,10 @@
 
   // ---- charts ----
   function initCharts(){
-    if(typeof Chart === 'undefined') return;
+    if(typeof Chart === 'undefined'){
+      document.querySelectorAll('.chart-wrap').forEach(el=> el.classList.add('chart-unavailable'));
+      return;
+    }
     Chart.defaults.font.family = "'IBM Plex Sans', sans-serif";
 
     const alcadaEl = document.getElementById('chartAlcada');
