@@ -347,6 +347,14 @@
   const jadiboEl = document.getElementById('jadiboSrc');
   const jadiboSrc = jadiboEl ? jadiboEl.getAttribute('src') : '';
 
+  // O botão flutuante do assistente (robotGuideImage) apontava para um arquivo
+  // externo (assets/jadibo-guia.gif) que nem sempre acompanha o pacote.
+  // Passa a usar a mesma imagem embutida em base64 (#jadiboSrc), garantindo
+  // que o assistente sempre apareça, mesmo sem a pasta assets/.
+  if (jadiboSrc && robotGuideImage) {
+    robotGuideImage.src = jadiboSrc;
+  }
+
   // ---- info robots: top button + a larger generated bottom button both open the pop-up ----
   document.querySelectorAll('.info-btn').forEach(btn=>{
     const section = btn.closest('section');
