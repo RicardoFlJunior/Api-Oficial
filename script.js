@@ -19,32 +19,6 @@
   });
   printBtn?.addEventListener('click', ()=> window.print());
 
-  // ---- dark / light mode toggle ----
-  const themeToggle = document.getElementById('themeToggle');
-  const THEME_KEY = 'ipSolutionTheme';
-  function applyTheme(theme){
-    document.documentElement.classList.toggle('dark-mode', theme === 'dark');
-    if(themeToggle){
-      const span = themeToggle.querySelector('span');
-      if(theme === 'dark'){
-        themeToggle.firstChild.textContent = '☀️ ';
-        if(span) span.textContent = 'Modo claro';
-      } else {
-        themeToggle.firstChild.textContent = '🌙 ';
-        if(span) span.textContent = 'Modo escuro';
-      }
-    }
-  }
-  let savedTheme = null;
-  try { savedTheme = localStorage.getItem(THEME_KEY); } catch(_){}
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
-  themeToggle?.addEventListener('click', ()=>{
-    const next = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark';
-    applyTheme(next);
-    try { localStorage.setItem(THEME_KEY, next); } catch(_){}
-  });
-
   // ---- build station rail ----
   const sections = Array.from(document.querySelectorAll('section[data-station]'));
   const railScroll = document.getElementById('railScroll');
