@@ -67,6 +67,34 @@
       else sections[guideIndex]?.classList.add('guide-focus');
     }
   }
+  // ---- fast, fixed-duration smooth scroll (native scrollIntoView slows down
+  // proportionally on long sections; this keeps navigation feeling snappy) ----
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let scrollAnimId = null;
+  function fastScrollTo(targetY, duration=380){
+    if(scrollAnimId) cancelAnimationFrame(scrollAnimId);
+    const startY = window.scrollY;
+    const diff = targetY - startY;
+    if(prefersReducedMotion || Math.abs(diff) < 2){ window.scrollTo(0, targetY); return; }
+    const startTime = performance.now();
+    const easeOutCubic = t => 1 - Math.pow(1-t, 3);
+    (function step(now){
+      const t = Math.min((now-startTime)/duration, 1);
+      window.scrollTo(0, startY + diff*easeOutCubic(t));
+      if(t<1) scrollAnimId = requestAnimationFrame(step);
+    })(startTime);
+  }
+  function scrollToSection(sec){
+    scrollElementIntoView(sec, 'start');
+  }
+  function scrollElementIntoView(el, align='start'){
+    const rect = el.getBoundingClientRect();
+    const targetY = align === 'center'
+      ? window.scrollY + rect.top - (window.innerHeight - rect.height)/2
+      : window.scrollY + rect.top;
+    fastScrollTo(targetY);
+  }
+
   function updateGuide(index, scroll=false){
     guideIndex = Math.max(0, Math.min(index, total-1));
     const sec = sections[guideIndex];
@@ -76,7 +104,7 @@
     robotGuideText.textContent = copy.text;
     robotGuidePrev.disabled = guideIndex === 0;
     robotGuideNext.disabled = guideIndex === total-1;
-    if(scroll) sec.scrollIntoView({behavior:'smooth',block:'start'});
+    if(scroll) scrollToSection(sec);
     if(robotGuide?.classList.contains('open')) setGuideOpen(true);
   }
   function showGuideIntro(){
@@ -142,7 +170,7 @@
     robotGuideFaqTitle.textContent = title || 'Dúvidas desta etapa';
     robotGuideFaqBody.innerHTML = inner.innerHTML;
     robotGuide.classList.add('faq-mode');
-    target.scrollIntoView({behavior:'smooth',block:'center'});
+    target.scrollIntoView && scrollElementIntoView(target,'center');
     setGuideOpen(true);
   }
   robotGuideBack?.addEventListener('click',()=>{
@@ -167,7 +195,7 @@
     const label = document.createElement('span');
     label.className = 'rail-label';
     label.textContent = sec.dataset.station + ' · ' + sec.dataset.label.toUpperCase();
-    btn.addEventListener('click', ()=> sec.scrollIntoView({behavior:'smooth'}));
+    btn.addEventListener('click', ()=> scrollElementIntoView(sec,'start'));
     wrap.appendChild(btn);
     wrap.appendChild(label);
     railScroll.appendChild(wrap);
@@ -188,7 +216,7 @@
     item.innerHTML = '<span class="st">' + sec.dataset.station + '</span><span>' + sec.dataset.label + '</span>';
     item.addEventListener('click', ()=>{
       closeMobileNav();
-      setTimeout(()=> sec.scrollIntoView({behavior:'smooth'}), 200);
+      setTimeout(()=> scrollElementIntoView(sec,'start'), 200);
     });
     mobileNavList.appendChild(item);
   });
@@ -418,6 +446,12 @@
       track.style.transform = 'translateX(' + (-idx * 100) + '%)';
       dots.forEach((d, k)=> d.classList.toggle('active', k === idx));
       if(curEl) curEl.textContent = idx + 1;
+      const activeCard = slides[idx].firstElementChild;
+      if(activeCard){
+        activeCard.classList.remove('carousel-card-enter');
+        void activeCard.offsetWidth; // force reflow so the animation restarts every time
+        activeCard.classList.add('carousel-card-enter');
+      }
     }
     if(prev) prev.addEventListener('click', ()=> go(idx - 1));
     if(next) next.addEventListener('click', ()=> go(idx + 1));

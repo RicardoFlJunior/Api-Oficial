@@ -867,6 +867,30 @@
   .carousel-dot.active{background:var(--orange);transform:scale(1.25);}
   .carousel-counter{font-family:var(--font-mono);font-size:13px;color:var(--slate);letter-spacing:.05em;min-width:46px;text-align:center;}
 
+  /* ---------- carousel slide entrance animation (páginas 6 e 11) ---------- */
+  @keyframes carouselCardEnter{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes carouselItemEnter{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes waBubbleEnter{from{opacity:0;transform:scale(.94) translateY(6px);}to{opacity:1;transform:scale(1) translateY(0);}}
+  @keyframes waStatusPulse{0%{box-shadow:0 0 0 0 rgba(255,106,19,.35);}70%{box-shadow:0 0 0 8px rgba(255,106,19,0);}100%{box-shadow:0 0 0 0 rgba(255,106,19,0);}}
+  .carousel-card-enter{animation:carouselCardEnter .5s var(--ease) both;}
+  .carousel-card-enter li,
+  .carousel-card-enter .carousel-slide-tag,
+  .carousel-card-enter h4,
+  .carousel-card-enter h5,
+  .carousel-card-enter p{animation:carouselItemEnter .45s var(--ease) both;}
+  .carousel-card-enter .carousel-slide-tag{animation-delay:.02s;}
+  .carousel-card-enter h4, .carousel-card-enter h5{animation-delay:.06s;}
+  .carousel-card-enter p{animation-delay:.1s;}
+  .carousel-card-enter li:nth-child(1){animation-delay:.14s;}
+  .carousel-card-enter li:nth-child(2){animation-delay:.19s;}
+  .carousel-card-enter li:nth-child(3){animation-delay:.24s;}
+  .carousel-card-enter li:nth-child(4){animation-delay:.29s;}
+  .step-carousel .carousel-card-enter .wa-preview{animation:waBubbleEnter .5s var(--ease) .12s both;}
+  .step-carousel .carousel-card-enter .wa-status{animation:waStatusPulse 1.1s var(--ease) .5s;}
+  @media (prefers-reduced-motion: reduce){
+    .carousel-card-enter, .carousel-card-enter *{animation:none!important;}
+  }
+
   /* template-process carousel (page 04) — text + live WhatsApp preview */
   .step-carousel{max-width:1000px;margin:0 auto;--card-bg:var(--img-desk);}
   .step-carousel .carousel-slide{display:flex;}
