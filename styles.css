@@ -116,7 +116,7 @@
   .rail-dot.active{background:var(--orange);width:12px;height:12px;box-shadow:0 0 0 4px var(--orange-light);}
   .rail-label{
     position:absolute;left:calc(var(--rail-w) - 4px);top:50%;transform:translateY(-50%);
-    background:var(--ink);color:#fff;font-family:var(--font-mono);font-size:13.12px;font-weight:600;
+    background:var(--ink-fixed);color:#fff;font-family:var(--font-mono);font-size:13.12px;font-weight:600;
     padding:5px 10px;border-radius:5px;white-space:nowrap;
     opacity:0;pointer-events:none;transition:opacity .15s ease, transform .15s ease;
     transform-origin:left center;
@@ -227,7 +227,7 @@
 
   /* ---------- sections generic ---------- */
   section{padding:96px 0;position:relative;}
-  section.dark{background:var(--ink);color:#fff;}
+  section.dark{background:var(--ink-fixed);color:#fff;}
   section.dark .sec-sub{color:#B9C9E6;}
   .divider{height:1px;background:var(--line);max-width:1080px;margin:0 auto;}
 
@@ -380,7 +380,7 @@
 
   /* ---------- phone mockup ---------- */
   .phone{
-    width:290px;background:var(--ink);border-radius:34px;padding:12px;
+    width:290px;background:var(--ink-fixed);border-radius:34px;padding:12px;
     box-shadow:0 30px 60px -20px rgba(11,37,69,.5);
   }
   .phone-screen{background:#F4F7FB;border-radius:24px;overflow:hidden;}
@@ -407,7 +407,7 @@
   @media (max-width:760px){.steps{grid-template-columns:1fr;}}
   .step{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:30px 24px;text-align:center;position:relative;}
   .step .num{
-    width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;
+    width:52px;height:52px;border-radius:50%;background:var(--ink-fixed);color:#fff;
     display:flex;align-items:center;justify-content:center;font-family:var(--font-display);
     font-weight:800;font-size:23.75px;margin:-52px auto 18px;border:5px solid var(--paper);
   }
@@ -447,7 +447,7 @@
   .cat-cost{text-align:center;font-size:14.38px;font-weight:700;padding-top:12px;border-top:1px solid var(--line);}
 
   /* ---------- stat cards ---------- */
-  .stat-card{background:var(--ink);border-radius:14px;padding:26px;color:#fff;text-align:center;}
+  .stat-card{background:var(--ink-fixed);border-radius:14px;padding:26px;color:#fff;text-align:center;}
   .stat-card .icon{width:44px;height:44px;border-radius:11px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:22.5px;margin:0 auto 20px;}
   .stat-card b{display:block;font-family:var(--font-display);font-size:37.5px;font-weight:800;}
   .stat-card span{font-family:var(--font-mono);font-size:13.75px;color:#B9C9E6;}
@@ -503,7 +503,7 @@
   @media (max-width:900px){.risk-grid{grid-template-columns:1fr;}}
   .risk-col{border-radius:14px;padding:24px;}
   .risk-col.plain{background:var(--white);border:1px solid var(--line);}
-  .risk-col.dark2{background:var(--ink);}
+  .risk-col.dark2{background:var(--ink-fixed);}
   .risk-col h4{font-family:var(--font-display);font-size:17.5px;margin-bottom:16px;}
   .risk-col.dark2 h4{color:#fff;}
   .risk-col ul{list-style:none;margin:0;padding:0;display:grid;gap:13px;}
@@ -514,7 +514,7 @@
   /* criterios grouped */
   .crit-card{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;}
   .crit-head{padding:22px 18px 18px;text-align:center;color:#fff;}
-  .crit-head.a{background:var(--ink);}
+  .crit-head.a{background:var(--ink-fixed);}
   .crit-head.b{background:var(--blue);}
   .crit-head .bubble-ic{width:42px;height:42px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:21.25px;margin:0 auto 10px;}
   .crit-head h4{font-family:var(--font-display);font-size:16.88px;font-weight:700;}
@@ -527,7 +527,7 @@
      rodapé, junto do BSP — por isso a seção e o rodapé perderam o excesso
      de respiro que antes ficava vazio. */
   #conclusao{padding-bottom:48px;}
-  footer{background:var(--ink);color:#fff;padding:40px 0 30px;}
+  footer{background:var(--ink-fixed);color:#fff;padding:40px 0 30px;}
   .footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.12);}
   .footer-bsp{font-family:var(--font-mono);font-size:12px;color:#9FB3D6;}
   .footer-jadibo{display:flex;justify-content:center;}
@@ -569,7 +569,7 @@
 
   .to-top{
     position:fixed;right:26px;bottom:26px;width:46px;height:46px;border-radius:50%;
-    background:var(--ink);color:#fff;border:none;cursor:pointer;font-size:20px;
+    background:var(--ink-fixed);color:#fff;border:none;cursor:pointer;font-size:20px;
     display:flex;align-items:center;justify-content:center;z-index:180;
     box-shadow:0 10px 24px -8px rgba(11,37,69,.5);opacity:0;pointer-events:none;
     transition:opacity .25s ease, transform .25s ease;
@@ -608,7 +608,7 @@
 
   /* ---------- history tip card ---------- */
   .tip-card{
-    background:var(--ink);border-radius:14px;padding:22px 24px;
+    background:var(--ink-fixed);border-radius:14px;padding:22px 24px;
     display:flex;gap:16px;align-items:flex-start;
   }
   .tip-card .ic{flex:none;width:40px;height:40px;border-radius:10px;background:var(--orange);display:flex;align-items:center;justify-content:center;font-size:21.25px;}
@@ -688,7 +688,7 @@
   .mobile-nav-btn{
     display:none;position:fixed;right:20px;bottom:20px;z-index:190;
     align-items:center;gap:9px;
-    background:var(--ink);color:#fff;border:none;border-radius:26px;
+    background:var(--ink-fixed);color:#fff;border:none;border-radius:26px;
     padding:13px 18px 13px 16px;font-family:var(--font-mono);font-size:15px;font-weight:600;
     box-shadow:0 14px 30px -12px rgba(11,37,69,.55);cursor:pointer;
     transition:transform .25s var(--ease);
@@ -1128,6 +1128,7 @@
     --paper:#F1F2EE;
     --white:#FCFCF9;
     --ink:#102942;
+    --ink-fixed:#102942;
     --ink-2:#193E60;
     --blue:#1769D2;
     --blue-light:#E9F1FA;
@@ -1256,6 +1257,18 @@
   html.dark-mode .rail{background:rgba(14,22,34,.86);border-right-color:rgba(255,255,255,.08);}
   html.dark-mode .progress-track{background:rgba(255,255,255,.08);}
   html.dark-mode .skip-link{box-shadow:0 8px 24px rgba(0,0,0,.5);}
+
+  /* components that intentionally keep a light/white background in both themes
+     (phone-mockup previews, photo-style cards) need locked-in dark text/icons —
+     otherwise they'd inherit the new light body text and become unreadable */
+  html.dark-mode .bubble{color:var(--ink-fixed);}
+  html.dark-mode .hist-carousel .callout h4,
+  html.dark-mode .hist-carousel .callout p,
+  html.dark-mode .hist-carousel .callout li,
+  html.dark-mode .hist-carousel .ba-card h5,
+  html.dark-mode .hist-carousel .ba-card p{color:var(--ink-fixed);}
+  html.dark-mode .hist-carousel .ba-card .ic{color:var(--ink-fixed);}
+
   @media (prefers-reduced-motion: no-preference){
     html{transition:background-color .25s var(--ease);}
     body{transition:background-color .25s var(--ease),color .25s var(--ease);}
