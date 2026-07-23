@@ -370,6 +370,30 @@
   faqModalOverlay.addEventListener('click', (e)=>{ if(e.target === faqModalOverlay) closeFaqModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFaqModal(); });
 
+  // ---- arrow-key / on-screen navigation between sections ----
+  function anyOverlayOpen(){
+    return topicModalOverlay.classList.contains('open')
+      || faqModalOverlay.classList.contains('open')
+      || mobileNavOverlay.classList.contains('open');
+  }
+  function goToSection(delta){
+    updateGuide(guideIndex + delta, true);
+  }
+  document.addEventListener('keydown', (e)=>{
+    if(anyOverlayOpen()) return;
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if(e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown'){
+      e.preventDefault(); goToSection(1);
+    } else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      e.preventDefault(); goToSection(-1);
+    }
+  });
+  const sectionNavUp = document.getElementById('sectionNavUp');
+  const sectionNavDown = document.getElementById('sectionNavDown');
+  sectionNavUp?.addEventListener('click', ()=> goToSection(-1));
+  sectionNavDown?.addEventListener('click', ()=> goToSection(1));
+
   // Imagem do Jadibô: embutida em base64 UMA única vez no HTML (#jadiboSrc),
   // em vez de repetida nas 14 seções. Todos os robôs saem desta fonte.
   const jadiboEl = document.getElementById('jadiboSrc');
