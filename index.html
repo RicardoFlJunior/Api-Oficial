@@ -533,18 +533,27 @@
             <div class="step">
               <div class="step-copy">
                 <div class="num">1</div>
-                <div class="step-eyebrow">Etapa 1 de 3</div>
-                <h4>Criação do template</h4>
-                <p>A empresa escreve o modelo da mensagem e escolhe a categoria — Utility, Marketing ou Authentication. Aqui se define o texto fixo, os campos variáveis (nome, número do pedido, código) e os botões, se houver.</p>
-                <p>A categoria escolhida influencia a tarifa e o tipo de conteúdo permitido, por isso vale revisar o modelo antes de enviar.</p>
+                <div class="step-eyebrow">Categoria 1 de 3</div>
+                <h4>Marketing</h4>
+                <p>Usado para promoções, novidades, ofertas e reengajamento de clientes que já interagiram com a empresa antes. É a categoria mais restrita pela Meta, com maior controle de qualidade e custo por mensagem mais alto.</p>
+                <p>Precisa ser opcional para o cliente — por isso é comum incluir um botão de resposta simples, como no exemplo ao lado.</p>
               </div>
-              <div class="wa-preview" aria-hidden="true">
-                <div class="wa-head"><span class="wa-ava">IP</span><div><div class="wa-name">Sua Empresa</div><div class="wa-sub">conta comercial</div></div></div>
-                <div class="wa-body">
-                  <div class="wa-status draft">Rascunho</div>
-                  <div class="wa-bubble">Olá, <span class="var">{{nome}}</span>! Seu pedido <span class="var">{{pedido}}</span> foi confirmado e já está em separação. 📦
-                    <div class="wa-meta">14:32</div>
+              <div class="tpl-card" aria-hidden="true">
+                <div class="tpl-head">
+                  <div class="tpl-icon">▦</div>
+                  <div class="tpl-title">
+                    <div class="tpl-name">inicio_atendimento</div>
+                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-marketing">Marketing</span></div>
                   </div>
+                  <div class="tpl-check">✓</div>
+                </div>
+                <div class="tpl-meta">💬 Sua Empresa</div>
+                <div class="tpl-body">
+                  Olá, podemos conversar agora?
+                  <div class="tpl-time">14:32 ✓✓</div>
+                </div>
+                <div class="tpl-buttons">
+                  <div class="tpl-btn">↩ Sim, podemos</div>
                 </div>
               </div>
             </div>
@@ -553,18 +562,29 @@
             <div class="step">
               <div class="step-copy">
                 <div class="num">2</div>
-                <div class="step-eyebrow">Etapa 2 de 3</div>
-                <h4>Envio para aprovação</h4>
-                <p>O template segue para análise da Meta, que costuma responder em até 24 horas — em períodos de alta demanda pode levar um pouco mais.</p>
-                <p>O modelo pode ser aprovado ou reprovado. Se reprovado, a Meta indica o motivo (conteúdo fora da política ou categoria incorreta); basta ajustar e reenviar, sem custo.</p>
+                <div class="step-eyebrow">Categoria 2 de 3</div>
+                <h4>Utilidade (Utility)</h4>
+                <p>Usado para atualizações sobre algo que já está em andamento: cobrança, pedido, agendamento, aviso de conta. É a categoria mais usada no dia a dia operacional e tem o menor custo por mensagem.</p>
+                <p>Os botões abaixo do texto direcionam o cliente para a ação certa, sem que ele precise digitar uma resposta livre.</p>
               </div>
-              <div class="wa-preview" aria-hidden="true">
-                <div class="wa-head"><span class="wa-ava">IP</span><div><div class="wa-name">Sua Empresa</div><div class="wa-sub">conta comercial</div></div></div>
-                <div class="wa-body">
-                  <div class="wa-status review">Em análise pela Meta</div>
-                  <div class="wa-bubble">Olá, <span class="var">{{nome}}</span>! Seu pedido <span class="var">{{pedido}}</span> foi confirmado e já está em separação. 📦
-                    <div class="wa-meta">aguardando aprovação <span class="wa-tick">⏳</span></div>
+              <div class="tpl-card" aria-hidden="true">
+                <div class="tpl-head">
+                  <div class="tpl-icon">▦</div>
+                  <div class="tpl-title">
+                    <div class="tpl-name">cobranca_sat_v4</div>
+                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-utility">Utilidade</span></div>
                   </div>
+                  <div class="tpl-check">✓</div>
+                </div>
+                <div class="tpl-meta">💬 Suporte da Empresa</div>
+                <div class="tpl-body">
+                  Olá, <span class="var">{{nome}}</span>. Existem parcelas em aberto no seu cadastro. Conte com a gente para buscar uma condição que facilite sua regularização.
+                  <div class="tpl-time">14:32 ✓✓</div>
+                </div>
+                <div class="tpl-buttons">
+                  <div class="tpl-btn">↩ Ver parcelas em aberto</div>
+                  <div class="tpl-btn">↩ Solicitar negociação</div>
+                  <div class="tpl-btn">↩ Falar com suporte</div>
                 </div>
               </div>
             </div>
@@ -573,18 +593,27 @@
             <div class="step">
               <div class="step-copy">
                 <div class="num">3</div>
-                <div class="step-eyebrow">Etapa 3 de 3</div>
-                <h4>Aprovação e uso</h4>
-                <p>Aprovado o template, ele já fica liberado para uso imediato: a empresa passa a poder iniciar conversas com os clientes usando aquele modelo, quantas vezes precisar.</p>
-                <p>Ele continua válido enquanto o conteúdo não mudar. Qualquer alteração exige nova análise — por isso vale usar campos variáveis em vez de criar um modelo novo a cada situação.</p>
+                <div class="step-eyebrow">Categoria 3 de 3</div>
+                <h4>Autenticação</h4>
+                <p>Usado exclusivamente para códigos de verificação (OTP), como login ou confirmação de identidade. Tem um formato fixo definido pela própria Meta e não pode conter conteúdo promocional.</p>
+                <p>Por segurança, o botão copia o código automaticamente, evitando erro de digitação por parte do cliente.</p>
               </div>
-              <div class="wa-preview" aria-hidden="true">
-                <div class="wa-head"><span class="wa-ava">IP</span><div><div class="wa-name">Sua Empresa</div><div class="wa-sub">conta comercial</div></div></div>
-                <div class="wa-body">
-                  <div class="wa-status approved">Aprovado ✓</div>
-                  <div class="wa-bubble">Olá, <b>Ricardo</b>! Seu pedido <b>#4821</b> foi confirmado e já está em separação. 📦
-                    <div class="wa-meta">14:32 <span class="wa-tick read">✓✓</span></div>
+              <div class="tpl-card" aria-hidden="true">
+                <div class="tpl-head">
+                  <div class="tpl-icon">▦</div>
+                  <div class="tpl-title">
+                    <div class="tpl-name">verificacao_login</div>
+                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-auth">Autenticação</span></div>
                   </div>
+                  <div class="tpl-check">✓</div>
+                </div>
+                <div class="tpl-meta">💬 Sua Empresa</div>
+                <div class="tpl-body">
+                  <span class="var">482913</span> é o seu código de verificação. Não compartilhe esse código com ninguém.
+                  <div class="tpl-time">14:32 ✓✓</div>
+                </div>
+                <div class="tpl-buttons">
+                  <div class="tpl-btn">⧉ Copiar código</div>
                 </div>
               </div>
             </div>
