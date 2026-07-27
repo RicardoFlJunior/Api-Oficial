@@ -291,25 +291,27 @@
   @media (max-width:600px){.grid.c2,.grid.c3,.grid.c4{grid-template-columns:1fr;}}
 
   /* ---------- clickable page index (página Objetivo) ---------- */
-  .page-index{display:grid;gap:10px;}
+  .page-index{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
   .page-index-item{
-    display:flex;align-items:center;gap:18px;width:100%;text-align:left;
+    display:flex;flex-direction:column;align-items:flex-start;gap:10px;
+    width:100%;text-align:left;min-height:150px;
     background:var(--white);border:1px solid var(--line);border-radius:14px;
-    padding:16px 20px;cursor:pointer;font-family:var(--font-body);
+    padding:20px;cursor:pointer;font-family:var(--font-body);
     transition:border-color .2s var(--ease), transform .2s var(--ease), background .2s var(--ease);
   }
-  .page-index-item:hover{border-color:var(--blue);transform:translateX(4px);background:var(--blue-light);}
+  .page-index-item:hover{border-color:var(--blue);transform:translateY(-3px);background:var(--blue-light);}
   .pi-num{
     flex:none;font-family:var(--font-mono);font-size:14.85px;font-weight:700;color:var(--blue);
-    width:34px;
   }
-  .pi-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
+  .pi-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;}
   .pi-name{font-family:var(--font-display);font-weight:700;font-size:16.85px;color:var(--ink);}
-  .pi-desc{font-size:14.85px;color:var(--slate);line-height:1.4;}
-  .pi-arrow{flex:none;font-size:18px;color:var(--slate);transition:transform .2s var(--ease), color .2s var(--ease);}
+  .pi-desc{font-size:14.2px;color:var(--slate);line-height:1.42;}
+  .pi-arrow{align-self:flex-end;font-size:16px;color:var(--slate);transition:transform .2s var(--ease), color .2s var(--ease);}
   .page-index-item:hover .pi-arrow{transform:translateX(3px);color:var(--blue);}
-  @media (max-width:620px){
-    .page-index-item{gap:12px;padding:14px 16px;}
+  @media (max-width:920px){ .page-index{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){
+    .page-index{grid-template-columns:1fr;}
+    .page-index-item{min-height:auto;padding:16px;}
     .pi-name{font-size:15.5px;}
     .pi-desc{font-size:13.5px;}
   }
@@ -506,6 +508,42 @@
 
   .alcada-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;margin-top:10px;}
   @media (max-width:860px){.alcada-layout{grid-template-columns:1fr;}}
+
+  /* ---------- Meta vs IP Solution comparison (página Alçada Meta) ---------- */
+  .meta-vs-ip{display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center;margin-top:36px;}
+  .mvi-col{border-radius:20px;padding:30px 28px;color:#fff;}
+  .mvi-meta{background:linear-gradient(160deg,#FF7A2E,#D6540F);}
+  .mvi-ip{background:linear-gradient(160deg,#1E76E6,#123E7A);}
+  .mvi-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
+  .mvi-avatar{
+    flex:none;width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.2);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:19.44px;
+  }
+  .mvi-head b{display:block;font-family:var(--font-display);font-size:20.52px;letter-spacing:.01em;}
+  .mvi-head small{display:block;font-size:11.34px;letter-spacing:.09em;text-transform:uppercase;opacity:.9;margin-top:2px;}
+  .mvi-col ul{list-style:none;margin:0;padding:0;display:grid;gap:14px;}
+  .mvi-col li{display:flex;align-items:center;gap:11px;font-size:15.66px;line-height:1.35;}
+  .mvi-check{
+    flex:none;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.22);
+    display:flex;align-items:center;justify-content:center;font-size:11.5px;
+  }
+  .mvi-link{display:flex;flex-direction:column;align-items:center;gap:7px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.04em;color:#9FB3D6;text-align:center;max-width:96px;}
+  .mvi-arrow{font-size:22px;color:#fff;}
+  .mvi-banner{
+    margin-top:28px;display:flex;align-items:center;gap:16px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:16px;
+    padding:20px 26px;
+  }
+  .mvi-banner-check{
+    flex:none;width:32px;height:32px;border-radius:50%;background:#fff;color:#163D61;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;
+  }
+  .mvi-banner p{margin:0;font-size:15.66px;line-height:1.5;color:#E6EDF9;}
+  @media (max-width:860px){
+    .meta-vs-ip{grid-template-columns:1fr;}
+    .mvi-link{flex-direction:row;max-width:none;justify-content:center;}
+    .mvi-arrow{transform:rotate(90deg);}
+  }
 
   .historico-layout{display:grid;grid-template-columns:1.3fr 1fr;gap:32px;}
   @media (max-width:860px){.historico-layout{grid-template-columns:1fr;}}
@@ -1244,14 +1282,14 @@
   .executive-summary{padding:106px 0;background:var(--paper);border:0;}
   .summary-head{align-items:flex-end;margin-bottom:38px;}
   .summary-grid{grid-template-columns:1.25fr .75fr .75fr;grid-template-areas:'benefit attention action' 'benefit journey journey';gap:16px;}
-  .summary-card{min-height:200px;border:1px solid rgba(16,41,66,.11);border-radius:22px;padding:28px;background:rgba(252,252,249,.86);box-shadow:none;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;}
-  .summary-card:nth-child(1){grid-area:benefit;min-height:416px;background:linear-gradient(155deg,#163D61,#102942);color:#fff;}
+  .summary-card{min-height:170px;border:1px solid rgba(16,41,66,.11);border-radius:22px;padding:28px;background:rgba(252,252,249,.86);box-shadow:none;display:flex;flex-direction:column;justify-content:center;gap:8px;position:relative;overflow:hidden;}
+  .summary-card:nth-child(1){grid-area:benefit;min-height:260px;background:linear-gradient(155deg,#163D61,#102942);color:#fff;}
   .summary-card:nth-child(2){grid-area:attention;background:#F6D8C7;}
   .summary-card:nth-child(3){grid-area:action;background:#DCEAF7;}
   .summary-card:nth-child(4){grid-area:journey;background:#F9F7F1;}
-  .summary-card:nth-child(1)::after{content:'✓';position:absolute;right:24px;top:12px;font:900 140px/1 var(--font-display);color:rgba(255,255,255,.07);}
-  .summary-card h3{font-size:clamp(19px,2vw,27px);letter-spacing:-.03em;position:relative;z-index:1;}
-  .summary-card:nth-child(1) h3{color:#fff;font-size:clamp(30px,3.6vw,48px);max-width:430px;}
+  .summary-card:nth-child(1)::after{content:'✓';position:absolute;right:24px;top:12px;font:900 100px/1 var(--font-display);color:rgba(255,255,255,.06);}
+  .summary-card h3{font-size:clamp(19px,2vw,27px);letter-spacing:-.03em;position:relative;z-index:1;margin:0;}
+  .summary-card:nth-child(1) h3{color:#fff;font-size:clamp(28px,3.2vw,42px);max-width:430px;}
   .summary-card:nth-child(1) p{color:#CAD7E4;max-width:430px;}
   .summary-start{border-radius:999px;padding:15px 22px;box-shadow:none;}
 
@@ -1265,9 +1303,9 @@
   #objetivo .grid.c2>.card:nth-child(1),#objetivo .grid.c2>.card:nth-child(6){grid-column:span 7;}
   #objetivo .grid.c2>.card:nth-child(2),#objetivo .grid.c2>.card:nth-child(5){grid-column:span 5;}
   .card,.cat-card,.crit-card,.step,.chart-card,.callout,.ba-card,.tip-card,.howto{border-radius:22px!important;border-color:rgba(16,41,66,.11)!important;box-shadow:none!important;}
-  .card{padding:30px;background:rgba(252,252,249,.88);min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;}
+  .card{padding:30px;background:rgba(252,252,249,.88);min-height:220px;display:flex;flex-direction:column;justify-content:flex-start;}
   .card .icon{position:absolute;top:26px;left:26px;width:48px;height:48px;border-radius:14px;}
-  .card h4{font-size:22.68px;letter-spacing:-.025em;}
+  .card h4{font-size:22.68px;letter-spacing:-.025em;margin-top:52px;}
   .card p{font-size:16.2px;line-height:1.6;}
   .card:nth-child(3n+1){background:#FCFCF9;}.card:nth-child(3n+2){background:#E7EFF6;}.card:nth-child(3n){background:#F7E4D8;}
   .compare{gap:16px;}
@@ -1295,7 +1333,7 @@
     .hstat,.hstat:last-child{padding:17px;}
     .hstat b{font-size:35.64px;}
     .summary-grid{grid-template-columns:1fr 1fr;grid-template-areas:'benefit benefit' 'attention action' 'journey journey';}
-    .summary-card:nth-child(1){min-height:310px;}
+    .summary-card:nth-child(1){min-height:230px;}
     .grid.c2{grid-template-columns:1fr 1fr;}
     .grid.c2>.card,#objetivo .grid.c2>.card:nth-child(n){grid-column:auto;}
   }
@@ -1307,7 +1345,7 @@
     .hero h1{font-size:53.65px;}
     .hero-stats{grid-template-columns:1fr;}
     .summary-grid{display:grid;grid-template-columns:1fr;grid-template-areas:'benefit' 'attention' 'action' 'journey';}
-    .summary-card,.summary-card:nth-child(1){min-height:230px;}
+    .summary-card,.summary-card:nth-child(1){min-height:190px;}
     .grid.c2{grid-template-columns:1fr;}
     section.dark{width:calc(100% - 16px);border-radius:22px;}
   }

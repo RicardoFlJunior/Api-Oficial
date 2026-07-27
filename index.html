@@ -235,38 +235,34 @@
       </div>
     </div>
 
-    <div class="alcada-layout">
-      <div class="banner-points">
-        <div class="banner-point"><div class="ic">$</div><p>Valores e categorias de cobrança são definidos exclusivamente pela Meta</p></div>
-        <div class="banner-point"><div class="ic">⇄</div><p>Podem ser alterados a qualquer momento, sem aviso prévio</p></div>
-        <div class="banner-point"><div class="ic">📄</div><p>Políticas comerciais e Termos de Uso seguem os critérios da própria Meta</p></div>
-        <div class="banner-point"><div class="ic">🛡️</div><p>A IP Solution atua como provedora da integração técnica (BSP)</p></div>
+    <div class="meta-vs-ip">
+      <div class="mvi-col mvi-meta">
+        <div class="mvi-head"><span class="mvi-avatar">M</span><div><b>Meta</b><small>Define e controla</small></div></div>
+        <ul>
+          <li><span class="mvi-check">✓</span> Precificação e categorias de cobrança</li>
+          <li><span class="mvi-check">✓</span> Regras comerciais e políticas de uso</li>
+          <li><span class="mvi-check">✓</span> Atualizações de valores e limites</li>
+          <li><span class="mvi-check">✓</span> Aprovação de templates</li>
+        </ul>
       </div>
-      <div class="chart-card on-dark">
-        <h4>Responsabilidades na prática</h4>
-        <div class="note">QUEM DEFINE × QUEM IMPLEMENTA</div>
-        <div class="responsibility-map">
-          <div class="responsibility-owner meta-owner">
-            <div class="owner-head"><span class="owner-mark">M</span><div><b>Meta</b><small>Define e controla</small></div></div>
-            <ul>
-              <li>Preços e categorias</li>
-              <li>Políticas e termos</li>
-              <li>Limites de envio</li>
-              <li>Aprovação de templates</li>
-            </ul>
-          </div>
-          <div class="responsibility-arrow" aria-hidden="true">→</div>
-          <div class="responsibility-owner ip-owner">
-            <div class="owner-head"><span class="owner-mark">IP</span><div><b>IP Solution</b><small>Implementa e acompanha</small></div></div>
-            <ul>
-              <li>Configuração técnica</li>
-              <li>Orientação na migração</li>
-              <li>Suporte e monitoramento</li>
-            </ul>
-          </div>
-        </div>
-        <p class="responsibility-caption">A IP Solution facilita a operação, mas não altera decisões comerciais ou políticas definidas pela Meta.</p>
+      <div class="mvi-link" aria-hidden="true">
+        <span>Regras definidas</span>
+        <span class="mvi-arrow">⇄</span>
+        <span>Operação implementada</span>
       </div>
+      <div class="mvi-col mvi-ip">
+        <div class="mvi-head"><span class="mvi-avatar">IP</span><div><b>IP Solution</b><small>Implementa e acompanha</small></div></div>
+        <ul>
+          <li><span class="mvi-check">✓</span> Implantação e configuração da API</li>
+          <li><span class="mvi-check">✓</span> Orientação ao cliente durante a migração</li>
+          <li><span class="mvi-check">✓</span> Repasse e explicação dos custos</li>
+          <li><span class="mvi-check">✓</span> Suporte e monitoramento da operação</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mvi-banner">
+      <span class="mvi-banner-check">✓</span>
+      <p>A Meta define quanto e como a API Oficial é cobrada. A IP Solution transforma essas regras em uma operação organizada, acompanhada e eficiente.</p>
     </div>
   </div>
 </section>
@@ -279,8 +275,8 @@
     <div class="sec-head">
       <div>
         <div class="kicker">Ponto de atenção</div>
-        <h2 class="sec-title">Reinício do histórico de conversas</h2>
-        <p class="sec-sub">Esta é uma característica da própria infraestrutura da Meta, e não uma limitação do processo de migração: ao ativar a API Oficial, o número passa a operar em um ambiente próprio da Meta, separado do WhatsApp Business tradicional, e o atendimento passa a registrar um novo histórico a partir da ativação.</p>
+        <h2 class="sec-title">Um novo histórico de conversas</h2>
+        <p class="sec-sub">Ao ativar a API Oficial, sua empresa passa a operar em uma infraestrutura própria da Meta, mais segura e preparada para uma comunicação profissional. Por isso, o histórico anterior não é transferido, e um novo registro de conversas é iniciado a partir da ativação.</p>
       </div>
       <button class="info-btn" data-faq="faq-historico" aria-expanded="false"><img class="mascot-icon" alt="Duvidas frequentes"><span class="think-badge" aria-hidden="true">?</span></button>
     </div>
@@ -296,24 +292,26 @@
           <div class="carousel-slide">
             <div class="callout">
               <div class="carousel-slide-tag">Contexto</div>
-              <h4>Por que isso acontece?</h4>
-              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:14px;">A separação de histórico é definida pela própria Meta, responsável pela tecnologia por trás do WhatsApp — não é uma decisão ou limitação da IP Solution. A API Oficial opera em uma infraestrutura própria da Meta, dedicada a empresas, totalmente apartada do aplicativo WhatsApp Business tradicional.</p>
-              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:18px;">Por se tratar de dois ambientes distintos dentro do ecossistema Meta, as mensagens trocadas antes da ativação permanecem apenas no dispositivo original: hoje não existe, por parte da Meta, um mecanismo oficial de importação desse histórico para a nova plataforma. Esse comportamento é padrão para qualquer empresa que migre para a API Oficial, independentemente do provedor de tecnologia escolhido.</p>
+              <h4>Por que um novo histórico é iniciado?</h4>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:14px;">Ao migrar para a API Oficial, sua empresa passa a operar em uma infraestrutura profissional da Meta, desenvolvida especialmente para comunicações corporativas e separada do aplicativo WhatsApp Business tradicional.</p>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:18px;">Como são ambientes distintos, a Meta ainda não disponibiliza um recurso oficial para transferir as conversas anteriores. Essa característica se aplica a todas as empresas que adotam a API Oficial, independentemente do provedor escolhido.</p>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-bottom:8px;font-weight:600;">Para uma transição segura e organizada:</p>
               <ul>
-                <li><span class="bullet-dot"></span> Orientamos exportar as conversas importantes antes de iniciar a migração, como medida preventiva</li>
-                <li><span class="bullet-dot"></span> A partir da ativação, todas as novas conversas passam a ser registradas normalmente na API Oficial</li>
-                <li><span class="bullet-dot"></span> A equipe de atendimento pode ser orientada previamente, reduzindo o impacto na rotina de trabalho</li>
+                <li><span class="bullet-dot"></span> Exporte previamente as conversas mais importantes</li>
+                <li><span class="bullet-dot"></span> Oriente a equipe antes da mudança, reduzindo impactos na rotina</li>
+                <li><span class="bullet-dot"></span> A partir da ativação, todas as novas interações serão registradas normalmente na plataforma</li>
               </ul>
+              <p style="font-size:15.62px;color:var(--slate);line-height:1.6;margin-top:16px;">Um novo histórico é iniciado, junto com uma operação mais profissional, organizada e preparada para crescer.</p>
             </div>
           </div>
           <div class="carousel-slide">
-            <div class="ba-card before"><div class="ic">💬</div><div><div class="carousel-slide-tag">Situação atual</div><h5>Antes da migração</h5><p>Histórico mantido no WhatsApp Business tradicional, no aparelho da empresa.</p><p>As conversas ficam armazenadas no dispositivo onde o WhatsApp Business está instalado. O acesso e a recuperação do histórico dependem do aparelho e dos backups realizados pelo próprio WhatsApp. Não há centralização das conversas em um servidor ou sistema externo.</p></div></div>
+            <div class="ba-card before"><div class="ic">💬</div><div><div class="carousel-slide-tag">Situação atual</div><h5>Antes da migração: histórico preservado no aparelho</h5><p>No WhatsApp Business tradicional, o histórico permanece armazenado no dispositivo da empresa e pode ser consultado conforme a disponibilidade do aparelho e dos backups do WhatsApp. Como as conversas ainda não estão centralizadas em uma plataforma corporativa, o acesso e a recuperação dependem diretamente desses recursos.</p></div></div>
           </div>
           <div class="carousel-slide">
-            <div class="ba-card after"><div class="ic">⇄</div><div><div class="carousel-slide-tag">Situação nova</div><h5>Depois da migração</h5><p>A partir da migração, todas as novas conversas são armazenadas pela plataforma integrada à API Oficial, permitindo acesso centralizado, múltiplos atendentes, rastreabilidade e maior controle sobre os atendimentos. O histórico anterior do WhatsApp Business não é migrado automaticamente para a API Oficial.</p></div></div>
+            <div class="ba-card after"><div class="ic">⇄</div><div><div class="carousel-slide-tag">Situação nova</div><h5>Depois da migração: atendimento centralizado e mais eficiente</h5><p>Com a API Oficial, todas as novas conversas passam a ser registradas em uma plataforma profissional, proporcionando atendimento com múltiplos agentes, acesso centralizado, rastreabilidade e maior controle da operação.</p><p>O histórico anterior permanece no WhatsApp Business tradicional, enquanto a empresa inicia uma nova jornada de atendimento, mais organizada, segura e preparada para crescer.</p></div></div>
           </div>
           <div class="carousel-slide">
-            <div class="tip-card"><div class="ic">💡</div><div><div class="carousel-slide-tag">Alternativa</div><h5>Migrar com um número novo</h5><p>Em vez de migrar o número que já concentra todo o histórico, é possível ativar a API Oficial em uma linha nova. O número antigo continua no WhatsApp Business tradicional, com o histórico intacto, enquanto o número novo já nasce operando na API — sem qualquer perda de conversas.</p></div></div>
+            <div class="tip-card"><div class="ic">💡</div><div><div class="carousel-slide-tag">Alternativa</div><h5>Alternativa: comece com um novo número</h5><p>Ative a API Oficial em uma nova linha e faça uma transição segura, sem abrir mão do histórico existente. O número atual permanece no WhatsApp Business tradicional, com as conversas preservadas, enquanto o novo número inicia uma operação profissional, centralizada e preparada para crescer.</p></div></div>
           </div>
         </div>
       </div>
