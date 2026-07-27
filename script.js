@@ -183,7 +183,6 @@
     setGuideOpen(true);
   });
   updateGuide(0);
-  setTimeout(()=>{ if(!guideEnabled && !guidePaused) showGuideIntro(); },900);
 
   sections.forEach(sec=>{
     const wrap = document.createElement('div');
