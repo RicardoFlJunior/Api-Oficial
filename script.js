@@ -270,27 +270,27 @@
   const TOPIC_DATA = {
     'sem-grupos': {
       icon: '👥',
-      title: 'Sem grupos',
+      title: 'Conversas individuais',
       body: 'Não ser possível participar ou criar grupos é uma das regras estabelecidas pela própria Meta para a API Oficial. Porém, com a IP Solution é possível criar grupos internos ou utilizar o recurso de "sussurro" para adicionar vários colaboradores a uma mesma conversa, sem que o cliente perceba a troca de atendente.'
     },
     'resposta-cliente': {
       icon: '⏱',
-      title: 'Resposta do cliente',
+      title: 'Interação do cliente',
       body: 'A janela de 24 horas só abre depois que o cliente responde ao template. Na plataforma da IP Solution é possível visualizar quanto tempo falta para esse prazo se esgotar, ajudando a equipe a se organizar antes que a janela feche.'
     },
     'sem-edicao': {
       icon: '✎',
-      title: 'Sem edição ou exclusão',
+      title: 'Mensagens preservadas',
       body: 'Mensagens enviadas não podem ser editadas ou apagadas depois do envio — essa também é uma regra definida diretamente pela Meta, válida para todos os BSPs, e não algo específico da IP Solution.'
     },
     'cobrancas': {
       icon: '$',
-      title: 'Cobranças recorrentes',
+      title: 'Valores definidos pela Meta',
       body: 'Os valores são definidos e cobrados diretamente pela Meta, de acordo com a categoria da mensagem enviada. A IP Solution não define nem adiciona qualquer margem sobre essas cobranças.'
     },
     'limites-envio': {
       icon: '📈',
-      title: 'Limites de envio',
+      title: 'Capacidade de envio',
       body: 'Os limites diários de envio são definidos automaticamente pela Meta, conforme a qualidade e a reputação do número. Manter boas práticas de envio ajuda a aumentar esses limites com o tempo.'
     },
     'historico-conversas': {
@@ -393,6 +393,14 @@
   const sectionNavDown = document.getElementById('sectionNavDown');
   sectionNavUp?.addEventListener('click', ()=> goToSection(-1));
   sectionNavDown?.addEventListener('click', ()=> goToSection(1));
+
+  // ---- clickable page index (página Objetivo) ----
+  document.querySelectorAll('.page-index-item').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.getElementById(btn.dataset.target);
+      if(target) scrollElementIntoView(target,'start');
+    });
+  });
 
   // Imagem do Jadibô: embutida em base64 UMA única vez no HTML (#jadiboSrc),
   // em vez de repetida nas 14 seções. Todos os robôs saem desta fonte.
