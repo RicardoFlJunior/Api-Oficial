@@ -25,6 +25,17 @@
   const readout = document.getElementById('railReadout');
   const total = sections.length;
 
+  // ---- horizontal slide deck (hero + resumo + 14 estações + rodapé) ----
+  const slidesTrackEl = document.getElementById('slidesTrack');
+  const allSlides = slidesTrackEl ? Array.from(slidesTrackEl.children) : [];
+  let slideIndex = 0;
+  function slideIndexOf(el){ return allSlides.indexOf(el); }
+  function goToSlide(i){
+    slideIndex = Math.max(0, Math.min(i, allSlides.length - 1));
+    if(slidesTrackEl) slidesTrackEl.style.transform = 'translateX(-' + (slideIndex * 100) + '%)';
+    syncNav();
+  }
+
   // ---- guided spotlight: the robot explains the current stage ----
   const robotGuide = document.getElementById('robotGuide');
   const robotGuideToggle = document.getElementById('robotGuideToggle');
@@ -67,33 +78,13 @@
       else sections[guideIndex]?.classList.add('guide-focus');
     }
   }
-  // ---- fast, fixed-duration smooth scroll (native scrollIntoView slows down
-  // proportionally on long sections; this keeps navigation feeling snappy) ----
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let scrollAnimId = null;
-  function fastScrollTo(targetY, duration=380){
-    if(scrollAnimId) cancelAnimationFrame(scrollAnimId);
-    const startY = window.scrollY;
-    const diff = targetY - startY;
-    if(prefersReducedMotion || Math.abs(diff) < 2){ window.scrollTo(0, targetY); return; }
-    const startTime = performance.now();
-    const easeOutCubic = t => 1 - Math.pow(1-t, 3);
-    (function step(now){
-      const t = Math.min((now-startTime)/duration, 1);
-      window.scrollTo(0, startY + diff*easeOutCubic(t));
-      if(t<1) scrollAnimId = requestAnimationFrame(step);
-    })(startTime);
-  }
-  function scrollToSection(sec){
-    scrollElementIntoView(sec, 'start');
-  }
+  // in-slide smooth scroll (small internal adjustments only — e.g. bringing a
+  // FAQ target into view inside the slide that's already on screen)
   function scrollElementIntoView(el, align='start'){
-    const rect = el.getBoundingClientRect();
-    const targetY = align === 'center'
-      ? window.scrollY + rect.top - (window.innerHeight - rect.height)/2
-      : window.scrollY + rect.top;
-    fastScrollTo(targetY);
+    if(!el || !el.scrollIntoView) return;
+    el.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth', block: align === 'center' ? 'center' : 'start'});
   }
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function updateGuide(index, scroll=false){
     guideIndex = Math.max(0, Math.min(index, total-1));
@@ -104,7 +95,7 @@
     robotGuideText.textContent = copy.text;
     robotGuidePrev.disabled = guideIndex === 0;
     robotGuideNext.disabled = guideIndex === total-1;
-    if(scroll) scrollToSection(sec);
+    if(scroll) goToSlide(slideIndexOf(sec));
     if(robotGuide?.classList.contains('open')) setGuideOpen(true);
   }
   function showGuideIntro(){
@@ -194,7 +185,7 @@
     const label = document.createElement('span');
     label.className = 'rail-label';
     label.textContent = sec.dataset.station + ' · ' + sec.dataset.label.toUpperCase();
-    btn.addEventListener('click', ()=> scrollElementIntoView(sec,'start'));
+    btn.addEventListener('click', ()=> goToSlide(slideIndexOf(sec)));
     wrap.appendChild(btn);
     wrap.appendChild(label);
     railScroll.appendChild(wrap);
@@ -215,7 +206,7 @@
     item.innerHTML = '<span class="st">' + sec.dataset.station + '</span><span>' + sec.dataset.label + '</span>';
     item.addEventListener('click', ()=>{
       closeMobileNav();
-      setTimeout(()=> scrollElementIntoView(sec,'start'), 200);
+      setTimeout(()=> goToSlide(slideIndexOf(sec)), 200);
     });
     mobileNavList.appendChild(item);
   });
@@ -227,43 +218,37 @@
   mobileNavClose.addEventListener('click', closeMobileNav);
   mobileNavOverlay.addEventListener('click', (e)=>{ if(e.target === mobileNavOverlay) closeMobileNav(); });
 
-  // ---- scroll progress + active section ----
+  // ---- progress bar + active section (driven by slideIndex, not scroll) ----
   const fill = document.getElementById('progressFill');
   const toTop = document.getElementById('toTop');
 
-  function onScroll(){
-    const h = document.documentElement;
-    const scrolled = h.scrollTop;
-    const max = h.scrollHeight - h.clientHeight;
-    fill.style.width = (max>0 ? (scrolled/max*100) : 0) + '%';
-    toTop.classList.toggle('show', scrolled > 700);
+  function syncNav(){
+    const max = allSlides.length - 1;
+    fill.style.width = (max>0 ? (slideIndex/max*100) : 0) + '%';
+    toTop.classList.toggle('show', slideIndex > 0);
 
-    let activeIdx = 0;
-    sections.forEach((sec,i)=>{
-      const r = sec.getBoundingClientRect();
-      if(r.top < window.innerHeight*0.5) activeIdx = i;
-    });
-    // seções já percorridas continuam preenchidas; a atual ganha o anel.
-    // a linha: cheia nos segmentos passados, pela metade no segmento atual,
-    // para a trilha terminar exatamente na bolinha em que o leitor está.
     dots.forEach((d,i)=>{
-      d.classList.toggle('done', i < activeIdx);
-      d.classList.toggle('active', i === activeIdx);
+      const secSlideIdx = slideIndexOf(sections[i]);
+      d.classList.toggle('done', secSlideIdx < slideIndex);
+      d.classList.toggle('active', secSlideIdx === slideIndex);
       const wrap = d.parentElement;
       if(wrap){
-        wrap.classList.toggle('done', i < activeIdx);
-        wrap.classList.toggle('current', i === activeIdx);
+        wrap.classList.toggle('done', secSlideIdx < slideIndex);
+        wrap.classList.toggle('current', secSlideIdx === slideIndex);
       }
     });
-    readout.textContent = String(activeIdx+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
-    mobileNavReadout.textContent = String(activeIdx+1).padStart(2,'0') + '/' + String(total).padStart(2,'0');
-    mobileNavItems.forEach((it,i)=> it.classList.toggle('active', i===activeIdx));
-    if(activeIdx !== guideIndex) updateGuide(activeIdx);
-  }
-  document.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
 
-  toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+    const stationIdx = sections.indexOf(allSlides[slideIndex]);
+    if(stationIdx >= 0){
+      readout.textContent = String(stationIdx+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      mobileNavReadout.textContent = String(stationIdx+1).padStart(2,'0') + '/' + String(total).padStart(2,'0');
+      mobileNavItems.forEach((it,i)=> it.classList.toggle('active', i===stationIdx));
+      if(stationIdx !== guideIndex) updateGuide(stationIdx);
+    }
+  }
+  goToSlide(0);
+
+  toTop.addEventListener('click', ()=> goToSlide(0));
 
   // ---- per-topic info popups ----
   const TOPIC_DATA = {
@@ -376,7 +361,7 @@
       || mobileNavOverlay.classList.contains('open');
   }
   function goToSection(delta){
-    updateGuide(guideIndex + delta, true);
+    goToSlide(slideIndex + delta);
   }
   document.addEventListener('keydown', (e)=>{
     if(anyOverlayOpen()) return;
@@ -393,11 +378,58 @@
   sectionNavUp?.addEventListener('click', ()=> goToSection(-1));
   sectionNavDown?.addEventListener('click', ()=> goToSection(1));
 
+  // ---- wheel & touch-swipe navigation between slides ----
+  // lets normal vertical scroll happen inside a tall slide first; only
+  // switches slides once the user is at the top/bottom edge and keeps going
+  let wheelCooldown = false;
+  document.addEventListener('wheel', (e)=>{
+    if(anyOverlayOpen()) return;
+    const activeSlide = allSlides[slideIndex];
+    if(!activeSlide) return;
+    const vertical = Math.abs(e.deltaY) >= Math.abs(e.deltaX);
+    let dir = 0;
+    if(vertical){
+      if(Math.abs(e.deltaY) < 18) return;
+      const atTop = activeSlide.scrollTop <= 2;
+      const atBottom = activeSlide.scrollTop + activeSlide.clientHeight >= activeSlide.scrollHeight - 2;
+      if(e.deltaY > 0 && atBottom) dir = 1;
+      else if(e.deltaY < 0 && atTop) dir = -1;
+      else return;
+    } else {
+      if(Math.abs(e.deltaX) < 18) return;
+      dir = e.deltaX > 0 ? 1 : -1;
+    }
+    if(wheelCooldown) return;
+    wheelCooldown = true;
+    goToSlide(slideIndex + dir);
+    setTimeout(()=> wheelCooldown = false, 650);
+  }, {passive:true});
+
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', (e)=>{
+    if(anyOverlayOpen()) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  document.addEventListener('touchend', (e)=>{
+    if(anyOverlayOpen()) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy)) return;
+    goToSlide(slideIndex + (dx < 0 ? 1 : -1));
+  }, {passive:true});
+
   // ---- clickable page index (página Objetivo) ----
+  document.querySelector('.skip-link')?.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const target = document.getElementById('objetivo');
+    if(target){ goToSlide(slideIndexOf(target)); target.focus?.(); }
+  });
+
   document.querySelectorAll('.page-index-item').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const target = document.getElementById(btn.dataset.target);
-      if(target) scrollElementIntoView(target,'start');
+      if(target) goToSlide(slideIndexOf(target));
     });
   });
 
