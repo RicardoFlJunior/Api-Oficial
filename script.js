@@ -295,7 +295,7 @@
     'historico-conversas': {
       icon: '📄',
       title: 'Histórico de conversas',
-      body: 'Veja a seção "Reinício do histórico de conversas", logo a seguir, para entender por que isso acontece e como se preparar para a migração.'
+      body: 'Veja a seção "Um novo histórico de conversas", logo a seguir, para entender por que isso acontece e como se preparar para a migração.'
     },
     'documentacao': {
       icon: '💼',
