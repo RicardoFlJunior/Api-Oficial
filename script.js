@@ -510,8 +510,8 @@
   // ---- extra template examples per category (página Templates) ----
   document.querySelectorAll('.tpl-examples').forEach(wrap=>{
     const examples = Array.from(wrap.querySelectorAll('.tpl-example'));
-    const prevBtn = wrap.querySelector('.tpl-example-btn[data-dir="prev"]');
-    const nextBtn = wrap.querySelector('.tpl-example-btn[data-dir="next"]');
+    const prevBtn = wrap.querySelector('.tpl-example-btn[data-ex-dir="prev"]');
+    const nextBtn = wrap.querySelector('.tpl-example-btn[data-ex-dir="next"]');
     const curEl = wrap.querySelector('.tpl-example-count .cur');
     const totEl = wrap.querySelector('.tpl-example-count .tot');
     if(examples.length < 2) return;
