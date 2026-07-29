@@ -942,25 +942,19 @@
   .faq-modal-body .faq-item .a{font-size:17.28px;color:var(--slate);line-height:1.55;}
   .faq-modal-body .faq-item + .faq-item{border-top:1px solid var(--line);padding-top:16px;}
 
-  /* ---------- bottom robot (larger call-to-action) ---------- */
+  /* ---------- bottom FAQ trigger (plain text, no mascot) ---------- */
   .info-btn-bottom{
-    display:flex;flex-direction:column;align-items:center;gap:11px;
-    margin:56px auto 4px;background:none;border:none;cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    margin:56px auto 4px;background:none;border:none;cursor:pointer;padding:8px 4px;
   }
-  .info-btn-bottom img{
-    width:78px;height:auto;display:block;pointer-events:none;
-    filter:drop-shadow(0 3px 5px rgba(11,37,69,.35)) drop-shadow(0 8px 20px rgba(11,37,69,.22));
-    transition:transform .28s var(--ease), filter .22s var(--ease);
-  }
-  .info-btn-bottom:hover img{transform:translateY(-4px) rotate(-4deg);filter:drop-shadow(0 4px 6px rgba(255,106,19,.5)) drop-shadow(0 10px 24px rgba(255,106,19,.35));}
-  .info-btn-bottom:active img{transform:translateY(-1px) scale(.97);}
   .info-btn-bottom .robo-label{
-    font-family:var(--font-mono);font-size:13.5px;letter-spacing:.05em;color:var(--slate);
-    display:flex;align-items:center;gap:7px;
+    font-family:var(--font-mono);font-size:14.5px;letter-spacing:.03em;color:var(--blue);
+    font-weight:700;border-bottom:1.5px solid transparent;
+    transition:border-color .2s var(--ease), color .2s var(--ease);
   }
-  .info-btn-bottom .robo-label b{color:var(--orange);font-weight:700;}
-  section.dark .info-btn-bottom .robo-label{color:#B9C9E6;}
-  section.dark .info-btn-bottom img{filter:drop-shadow(0 0 2px rgba(255,255,255,.5)) drop-shadow(0 8px 20px rgba(0,0,0,.4));}
+  .info-btn-bottom:hover .robo-label{border-color:var(--blue);color:var(--orange);border-color:var(--orange);}
+  section.dark .info-btn-bottom .robo-label{color:#8FB4E6;}
+  section.dark .info-btn-bottom:hover .robo-label{color:var(--orange-mid);border-color:var(--orange-mid);}
 
   /* ---------- background-photo sections ---------- */
   section.bg-photo{position:relative;isolation:isolate;}

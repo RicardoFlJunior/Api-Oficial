@@ -457,17 +457,14 @@
   document.querySelectorAll('.info-btn').forEach(btn=>{
     const section = btn.closest('section');
     const faqId = btn.dataset.faq;
-    const mascotImg = btn.querySelector('.mascot-icon');
-    // usa a fonte única; cai para o src do próprio botão se ele existir
-    const mascotSrc = jadiboSrc || (mascotImg ? mascotImg.getAttribute('src') : '');
     const titleEl = section ? section.querySelector('.sec-title') : null;
     const title = titleEl ? titleEl.textContent.trim() : 'Dúvidas frequentes';
 
     btn.setAttribute('aria-expanded', 'false');
     btn.addEventListener('click', ()=> showFaqInGuide(btn, faqId, title));
 
-    if(section && mascotSrc){
-      // a section can redirect its Jadibô elsewhere via data-jadibo-slot
+    if(section){
+      // a section can redirect its FAQ trigger elsewhere via data-jadibo-slot
       // (the last section mounts it in the footer row, beside the BSP line)
       const slot = section.dataset.jadiboSlot ? document.getElementById(section.dataset.jadiboSlot) : null;
       const wrap = slot || section.querySelector('.wrap') || section;
@@ -475,13 +472,9 @@
       bottom.type = 'button';
       bottom.className = 'info-btn-bottom' + (section.classList.contains('dark') ? ' on-dark' : '');
       bottom.setAttribute('aria-label', 'Abrir dúvidas frequentes');
-      const bimg = document.createElement('img');
-      bimg.src = mascotSrc;
-      bimg.alt = 'Robô de dúvidas';
       const label = document.createElement('span');
       label.className = 'robo-label';
-      label.innerHTML = 'Ficou com dúvidas? <b>Clique no Jadibô</b>';
-      bottom.appendChild(bimg);
+      label.textContent = 'Ficou com dúvidas, clique aqui';
       bottom.appendChild(label);
       bottom.addEventListener('click', ()=> showFaqInGuide(bottom, faqId, title));
       wrap.appendChild(bottom);
