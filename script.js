@@ -295,7 +295,7 @@
     'historico-conversas': {
       icon: '📄',
       title: 'Histórico de conversas',
-      body: 'Veja a seção "Um novo histórico de conversas", logo a seguir, para entender por que isso acontece e como se preparar para a migração.'
+      body: 'Veja a seção "Reinício do histórico de conversas", logo a seguir, para entender por que isso acontece e como se preparar para a migração.'
     },
     'documentacao': {
       icon: '💼',
@@ -316,6 +316,26 @@
       icon: '🔒',
       title: 'Acesso e verificação',
       body: 'Esses itens são necessários porque deixam o Portfólio Empresarial mais seguro e completo, liberando o uso pleno da API Oficial junto à Meta.'
+    },
+    'hist-por-que': {
+      icon: '💬',
+      title: 'Por que um novo histórico é iniciado?',
+      body: 'Ao migrar para a API Oficial, sua empresa passa a operar em uma infraestrutura profissional da Meta, desenvolvida especialmente para comunicações corporativas e separada do aplicativo WhatsApp Business tradicional. Como são ambientes distintos, a Meta ainda não disponibiliza um recurso oficial para transferir as conversas anteriores — essa característica se aplica a todas as empresas que adotam a API Oficial, independentemente do provedor escolhido. Para uma transição segura: exporte previamente as conversas mais importantes, oriente a equipe antes da mudança e saiba que, a partir da ativação, todas as novas interações já são registradas normalmente na plataforma. Um novo histórico é iniciado, junto com uma operação mais profissional, organizada e preparada para crescer.'
+    },
+    'hist-antes': {
+      icon: '📱',
+      title: 'Antes da migração: histórico preservado no aparelho',
+      body: 'No WhatsApp Business tradicional, o histórico permanece armazenado no dispositivo da empresa e pode ser consultado conforme a disponibilidade do aparelho e dos backups do WhatsApp. Como as conversas ainda não estão centralizadas em uma plataforma corporativa, o acesso e a recuperação dependem diretamente desses recursos.'
+    },
+    'hist-depois': {
+      icon: '⇄',
+      title: 'Depois da migração: atendimento centralizado e mais eficiente',
+      body: 'Com a API Oficial, todas as novas conversas passam a ser registradas em uma plataforma profissional, proporcionando atendimento com múltiplos agentes, acesso centralizado, rastreabilidade e maior controle da operação. O histórico anterior permanece no WhatsApp Business tradicional, enquanto a empresa inicia uma nova jornada de atendimento, mais organizada, segura e preparada para crescer.'
+    },
+    'hist-alternativa': {
+      icon: '💡',
+      title: 'Alternativa: comece com um novo número',
+      body: 'Ative a API Oficial em uma nova linha e faça uma transição segura, sem abrir mão do histórico existente. O número atual permanece no WhatsApp Business tradicional, com as conversas preservadas, enquanto o novo número inicia uma operação profissional, centralizada e preparada para crescer.'
     }
   };
 
@@ -342,6 +362,9 @@
       e.stopPropagation();
       openTopicModal(btn.dataset.topic);
     });
+  });
+  document.querySelectorAll('.topic-tile').forEach(btn=>{
+    btn.addEventListener('click', ()=> openTopicModal(btn.dataset.topic));
   });
   topicModalClose.addEventListener('click', closeTopicModal);
   topicModalOverlay.addEventListener('click', (e)=>{ if(e.target === topicModalOverlay) closeTopicModal(); });
