@@ -140,6 +140,7 @@
     else setGuideOpen(!robotGuide.classList.contains('open'));
   });
   robotGuideClose?.addEventListener('click',()=>setGuideOpen(false));
+  document.getElementById('robotGuideBackdrop')?.addEventListener('click',()=>setGuideOpen(false));
   robotGuideEnable?.addEventListener('click',enableGuide);
   robotGuideDisable?.addEventListener('click',()=>setGuideOpen(false));
   summaryStartGuide?.addEventListener('click',enableGuide);
@@ -407,6 +408,7 @@
   faqModalClose.addEventListener('click', closeFaqModal);
   faqModalOverlay.addEventListener('click', (e)=>{ if(e.target === faqModalOverlay) closeFaqModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeFaqModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && robotGuide?.classList.contains('open')) setGuideOpen(false); });
 
   // ---- arrow-key / on-screen navigation between sections ----
   function anyOverlayOpen(){
