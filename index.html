@@ -290,11 +290,18 @@
         <div class="faq-item"><div class="q">Isso afeta o número de telefone ou só o histórico?</div><div class="a">Só o histórico de conversas. O número continua o mesmo e os contatos não percebem diferença ao enviar mensagens.</div></div>
       </div>
     </div>
-    <div class="topic-tiles" id="histTopicTiles">
-      <button class="topic-tile" data-topic="hist-por-que"><span class="tt-icon">💬</span><span class="tt-name">Por que um novo histórico é iniciado?</span></button>
-      <button class="topic-tile" data-topic="hist-antes"><span class="tt-icon">📱</span><span class="tt-name">Antes da migração</span></button>
-      <button class="topic-tile" data-topic="hist-depois"><span class="tt-icon">⇄</span><span class="tt-name">Depois da migração</span></button>
-      <button class="topic-tile" data-topic="hist-alternativa"><span class="tt-icon">💡</span><span class="tt-name">Alternativa: novo número</span></button>
+    <div class="hist-explorer">
+      <div class="hist-nav" id="histNav">
+        <button class="hist-nav-item active" data-topic="hist-por-que"><span class="hn-icon">💬</span><span class="hn-name">Por que um novo histórico é iniciado?</span></button>
+        <button class="hist-nav-item" data-topic="hist-antes"><span class="hn-icon">📱</span><span class="hn-name">Antes da migração</span></button>
+        <button class="hist-nav-item" data-topic="hist-depois"><span class="hn-icon">⇄</span><span class="hn-name">Depois da migração</span></button>
+        <button class="hist-nav-item" data-topic="hist-alternativa"><span class="hn-icon">💡</span><span class="hn-name">Alternativa: novo número</span></button>
+      </div>
+      <div class="hist-panel" id="histPanel">
+        <div class="hist-panel-icon" id="histPanelIcon">💬</div>
+        <h4 id="histPanelTitle">Por que um novo histórico é iniciado?</h4>
+        <p id="histPanelBody"></p>
+      </div>
     </div>
   </div>
 </section>

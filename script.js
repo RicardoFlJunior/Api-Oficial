@@ -363,9 +363,25 @@
       openTopicModal(btn.dataset.topic);
     });
   });
-  document.querySelectorAll('.topic-tile').forEach(btn=>{
-    btn.addEventListener('click', ()=> openTopicModal(btn.dataset.topic));
+  // ---- Histórico page: vertical topic list + hover/click side panel ----
+  const histNavItems = Array.from(document.querySelectorAll('.hist-nav-item'));
+  const histPanelIcon = document.getElementById('histPanelIcon');
+  const histPanelTitle = document.getElementById('histPanelTitle');
+  const histPanelBody = document.getElementById('histPanelBody');
+  function showHistTopic(key){
+    const data = TOPIC_DATA[key];
+    if(!data || !histPanelIcon) return;
+    histPanelIcon.textContent = data.icon;
+    histPanelTitle.textContent = data.title;
+    histPanelBody.textContent = data.body;
+    histNavItems.forEach(it=> it.classList.toggle('active', it.dataset.topic === key));
+  }
+  histNavItems.forEach(item=>{
+    item.addEventListener('mouseenter', ()=> showHistTopic(item.dataset.topic));
+    item.addEventListener('click', ()=> showHistTopic(item.dataset.topic));
+    item.addEventListener('focus', ()=> showHistTopic(item.dataset.topic));
   });
+  if(histNavItems.length) showHistTopic(histNavItems[0].dataset.topic);
   topicModalClose.addEventListener('click', closeTopicModal);
   topicModalOverlay.addEventListener('click', (e)=>{ if(e.target === topicModalOverlay) closeTopicModal(); });
   document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeTopicModal(); });
