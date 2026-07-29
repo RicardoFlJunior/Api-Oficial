@@ -507,6 +507,26 @@
     }
   });
 
+  // ---- extra template examples per category (página Templates) ----
+  document.querySelectorAll('.tpl-examples').forEach(wrap=>{
+    const examples = Array.from(wrap.querySelectorAll('.tpl-example'));
+    const prevBtn = wrap.querySelector('.tpl-example-btn[data-dir="prev"]');
+    const nextBtn = wrap.querySelector('.tpl-example-btn[data-dir="next"]');
+    const curEl = wrap.querySelector('.tpl-example-count .cur');
+    const totEl = wrap.querySelector('.tpl-example-count .tot');
+    if(examples.length < 2) return;
+    let exIdx = 0;
+    if(totEl) totEl.textContent = examples.length;
+    function showExample(i){
+      exIdx = (i + examples.length) % examples.length;
+      examples.forEach((ex, k)=> ex.hidden = k !== exIdx);
+      if(curEl) curEl.textContent = exIdx + 1;
+    }
+    prevBtn?.addEventListener('click', ()=> showExample(exIdx - 1));
+    nextBtn?.addEventListener('click', ()=> showExample(exIdx + 1));
+    showExample(0);
+  });
+
   // ---- info carousels (client pages through the cards with prev/next) ----
   document.querySelectorAll('[data-carousel]').forEach(car=>{
     const track = car.querySelector('.carousel-track');

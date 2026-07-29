@@ -169,7 +169,7 @@
     </div>
     <div class="grid c3">
       <div class="card"><button class="topic-info-btn" data-topic="sem-grupos" aria-label="Por que essa limitação existe">i</button><div class="icon o">👥</div><h4>Conversas individuais</h4><p>A comunicação é realizada individualmente, pois a API Oficial, por padrões de atendimento, não utiliza grupos.</p></div>
-      <div class="card"><button class="topic-info-btn" data-topic="resposta-cliente" aria-label="Por que essa limitação existe">i</button><div class="icon o">⏱</div><h4>Interação do cliente</h4><p>Após o cliente responder ao template, é aberta uma janela de atendimento de 24 horas. Durante esse período, é possível enviar mensagens livremente. Caso o cliente ainda não tenha respondido, não será possível enviar novas mensagens, sendo necessário aguardar o retorno dele.</p></div>
+      <div class="card"><button class="topic-info-btn" data-topic="resposta-cliente" aria-label="Por que essa limitação existe">i</button><div class="icon o">⏱</div><h4>Interação do cliente</h4><p>Após o cliente responder ao template, inicia-se uma janela de atendimento de 24 horas. Enquanto não houver resposta, o mesmo template não poderá ser enviado novamente.</p></div>
       <div class="card"><button class="topic-info-btn" data-topic="sem-edicao" aria-label="Por que essa limitação existe">i</button><div class="icon o">✎</div><h4>Mensagens preservadas</h4><p>Para atender aos requisitos de auditoria da Meta, as mensagens enviadas permanecem registradas, não sendo possível editá-las ou excluí-las posteriormente.</p></div>
       <div class="card"><button class="topic-info-btn" data-topic="cobrancas" aria-label="Por que essa limitação existe">i</button><div class="icon o">$</div><h4>Valores definidos pela Meta</h4><p>As cobranças seguem exclusivamente as políticas, os critérios e os valores definidos pela Meta. Qualquer alteração neste contexto é responsabilidade da própria Meta.</p></div>
       <div class="card"><button class="topic-info-btn" data-topic="limites-envio" aria-label="Por que essa limitação existe">i</button><div class="icon o">📈</div><h4>Capacidade de envio</h4><p>Inicialmente, a conta possui um limite de envios, que é ampliado gradativamente pela Meta conforme a qualidade das interações e o histórico da conta.</p></div>
@@ -560,22 +560,65 @@
                 <p>Usado para promoções, novidades, ofertas e reengajamento de clientes que já interagiram com a empresa antes. É a categoria mais restrita pela Meta, com maior controle de qualidade e custo por mensagem mais alto.</p>
                 <p>Precisa ser opcional para o cliente — por isso é comum incluir um botão de resposta simples, como no exemplo ao lado.</p>
               </div>
-              <div class="tpl-card" aria-hidden="true">
-                <div class="tpl-head">
-                  <div class="tpl-icon">▦</div>
-                  <div class="tpl-title">
-                    <div class="tpl-name">inicio_atendimento</div>
-                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-marketing">Marketing</span></div>
+              <div class="tpl-examples">
+                <div class="tpl-card tpl-example" aria-hidden="true">
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">inicio_atendimento</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-marketing">Marketing</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
                   </div>
-                  <div class="tpl-check">✓</div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Olá, podemos conversar agora?
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Sim, podemos</div>
+                  </div>
                 </div>
-                <div class="tpl-meta">💬 Sua Empresa</div>
-                <div class="tpl-body">
-                  Olá, podemos conversar agora?
-                  <div class="tpl-time">14:32 ✓✓</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">promo_black_friday</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-marketing">Marketing</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Corre! Até domingo você tem 20% OFF em toda a loja. Aproveite antes que acabe! 🛍️
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Ver ofertas</div>
+                  </div>
                 </div>
-                <div class="tpl-buttons">
-                  <div class="tpl-btn">↩ Sim, podemos</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">reengajamento_cliente</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-marketing">Marketing</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Sentimos sua falta, <span class="var">{{nome}}</span>! Que tal voltar a fazer parte da nossa comunidade?
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Quero voltar</div>
+                  </div>
+                </div>
+                <div class="tpl-example-nav">
+                  <button type="button" class="tpl-example-btn" data-dir="prev" aria-label="Exemplo anterior de Marketing">‹</button>
+                  <span class="tpl-example-count">Exemplo <span class="cur">1</span>/<span class="tot">3</span></span>
+                  <button type="button" class="tpl-example-btn" data-dir="next" aria-label="Próximo exemplo de Marketing">›</button>
                 </div>
               </div>
             </div>
@@ -589,24 +632,69 @@
                 <p>Usado para atualizações sobre algo que já está em andamento: cobrança, pedido, agendamento, aviso de conta. É a categoria mais usada no dia a dia operacional e tem o menor custo por mensagem.</p>
                 <p>Os botões abaixo do texto direcionam o cliente para a ação certa, sem que ele precise digitar uma resposta livre.</p>
               </div>
-              <div class="tpl-card" aria-hidden="true">
-                <div class="tpl-head">
-                  <div class="tpl-icon">▦</div>
-                  <div class="tpl-title">
-                    <div class="tpl-name">cobranca_sat_v4</div>
-                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-utility">Utilidade</span></div>
+              <div class="tpl-examples">
+                <div class="tpl-card tpl-example" aria-hidden="true">
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">cobranca_sat_v4</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-utility">Utilidade</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
                   </div>
-                  <div class="tpl-check">✓</div>
+                  <div class="tpl-meta">💬 Suporte da Empresa</div>
+                  <div class="tpl-body">
+                    Olá, <span class="var">{{nome}}</span>. Existem parcelas em aberto no seu cadastro. Conte com a gente para buscar uma condição que facilite sua regularização.
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Ver parcelas em aberto</div>
+                    <div class="tpl-btn">↩ Solicitar negociação</div>
+                    <div class="tpl-btn">↩ Falar com suporte</div>
+                  </div>
                 </div>
-                <div class="tpl-meta">💬 Suporte da Empresa</div>
-                <div class="tpl-body">
-                  Olá, <span class="var">{{nome}}</span>. Existem parcelas em aberto no seu cadastro. Conte com a gente para buscar uma condição que facilite sua regularização.
-                  <div class="tpl-time">14:32 ✓✓</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">confirmacao_pedido</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-utility">Utilidade</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Olá, <span class="var">{{nome}}</span>! Seu pedido <span class="var">{{pedido}}</span> foi confirmado e já está em separação. 📦
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Rastrear pedido</div>
+                    <div class="tpl-btn">↩ Falar com suporte</div>
+                  </div>
                 </div>
-                <div class="tpl-buttons">
-                  <div class="tpl-btn">↩ Ver parcelas em aberto</div>
-                  <div class="tpl-btn">↩ Solicitar negociação</div>
-                  <div class="tpl-btn">↩ Falar com suporte</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">lembrete_agendamento</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-utility">Utilidade</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Olá, <span class="var">{{nome}}</span>! Lembrando que seu horário está marcado para <span class="var">{{data}}</span> às <span class="var">{{hora}}</span>.
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">↩ Confirmar presença</div>
+                    <div class="tpl-btn">↩ Reagendar</div>
+                  </div>
+                </div>
+                <div class="tpl-example-nav">
+                  <button type="button" class="tpl-example-btn" data-dir="prev" aria-label="Exemplo anterior de Utilidade">‹</button>
+                  <span class="tpl-example-count">Exemplo <span class="cur">1</span>/<span class="tot">3</span></span>
+                  <button type="button" class="tpl-example-btn" data-dir="next" aria-label="Próximo exemplo de Utilidade">›</button>
                 </div>
               </div>
             </div>
@@ -620,22 +708,65 @@
                 <p>Usado exclusivamente para códigos de verificação (OTP), como login ou confirmação de identidade. Tem um formato fixo definido pela própria Meta e não pode conter conteúdo promocional.</p>
                 <p>Por segurança, o botão copia o código automaticamente, evitando erro de digitação por parte do cliente.</p>
               </div>
-              <div class="tpl-card" aria-hidden="true">
-                <div class="tpl-head">
-                  <div class="tpl-icon">▦</div>
-                  <div class="tpl-title">
-                    <div class="tpl-name">verificacao_login</div>
-                    <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-auth">Autenticação</span></div>
+              <div class="tpl-examples">
+                <div class="tpl-card tpl-example" aria-hidden="true">
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">verificacao_login</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-auth">Autenticação</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
                   </div>
-                  <div class="tpl-check">✓</div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    <span class="var">482913</span> é o seu código de verificação. Não compartilhe esse código com ninguém.
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">⧉ Copiar código</div>
+                  </div>
                 </div>
-                <div class="tpl-meta">💬 Sua Empresa</div>
-                <div class="tpl-body">
-                  <span class="var">482913</span> é o seu código de verificação. Não compartilhe esse código com ninguém.
-                  <div class="tpl-time">14:32 ✓✓</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">login_seguranca</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-auth">Autenticação</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Detectamos um novo acesso à sua conta. Use o código <span class="var">193847</span> para confirmar que é você.
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">⧉ Copiar código</div>
+                  </div>
                 </div>
-                <div class="tpl-buttons">
-                  <div class="tpl-btn">⧉ Copiar código</div>
+                <div class="tpl-card tpl-example" aria-hidden="true" hidden>
+                  <div class="tpl-head">
+                    <div class="tpl-icon">▦</div>
+                    <div class="tpl-title">
+                      <div class="tpl-name">recuperacao_senha</div>
+                      <div class="tpl-tags"><span class="tpl-tag tpl-tag-template">Template</span><span class="tpl-tag tpl-tag-auth">Autenticação</span></div>
+                    </div>
+                    <div class="tpl-check">✓</div>
+                  </div>
+                  <div class="tpl-meta">💬 Sua Empresa</div>
+                  <div class="tpl-body">
+                    Seu código para redefinir a senha é <span class="var">570214</span>. Válido por 5 minutos.
+                    <div class="tpl-time">14:32 ✓✓</div>
+                  </div>
+                  <div class="tpl-buttons">
+                    <div class="tpl-btn">⧉ Copiar código</div>
+                  </div>
+                </div>
+                <div class="tpl-example-nav">
+                  <button type="button" class="tpl-example-btn" data-dir="prev" aria-label="Exemplo anterior de Autenticação">‹</button>
+                  <span class="tpl-example-count">Exemplo <span class="cur">1</span>/<span class="tot">3</span></span>
+                  <button type="button" class="tpl-example-btn" data-dir="next" aria-label="Próximo exemplo de Autenticação">›</button>
                 </div>
               </div>
             </div>
