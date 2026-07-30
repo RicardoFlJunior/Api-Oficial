@@ -97,16 +97,16 @@
   // proportionally on long sections; this keeps navigation feeling snappy) ----
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let scrollAnimId = null;
-  function fastScrollTo(targetY, duration=380){
+  function fastScrollTo(targetY, duration=280){
     if(scrollAnimId) cancelAnimationFrame(scrollAnimId);
     const startY = window.scrollY;
     const diff = targetY - startY;
-    if(prefersReducedMotion || Math.abs(diff) < 2){ window.scrollTo(0, targetY); return; }
+    if(prefersReducedMotion || Math.abs(diff) < 2){ window.scrollTo({top:targetY, left:0, behavior:'auto'}); return; }
     const startTime = performance.now();
     const easeOutCubic = t => 1 - Math.pow(1-t, 3);
     (function step(now){
       const t = Math.min((now-startTime)/duration, 1);
-      window.scrollTo(0, startY + diff*easeOutCubic(t));
+      window.scrollTo({top:startY + diff*easeOutCubic(t), left:0, behavior:'auto'});
       if(t<1) scrollAnimId = requestAnimationFrame(step);
     })(startTime);
   }
