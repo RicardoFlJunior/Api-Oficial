@@ -381,7 +381,7 @@
   .robot-guide.open .robot-guide-balloon{opacity:1;visibility:visible;transform:none;}
   .robot-guide-balloon::before{content:'';position:absolute;left:-9px;right:auto;bottom:28px;width:16px;height:16px;background:rgba(11,37,69,.96);border-right:0;border-top:0;border-left:1px solid rgba(76,160,255,.65);border-bottom:1px solid rgba(76,160,255,.65);transform:rotate(45deg);}
   .robot-guide-step{font-family:var(--font-mono);font-size:11.34px;letter-spacing:.1em;color:var(--orange-mid);margin-bottom:6px;}
-  .robot-guide-balloon strong {display: inline;font-family: var(--font-display);font-size: inherit;font-weight: 700;}
+  .robot-guide-balloon strong{display:block;font-family:var(--font-display);font-size:19.44px;line-height:1.25;padding-right:24px;}
   .robot-guide-balloon p{margin:8px 0 14px;color:#D9E6F7;font-size:15.66px;line-height:1.5;}
   .robot-guide-help{width:100%;margin:0 0 12px;padding:9px 12px;border:1px solid rgba(255,106,19,.55);border-radius:9px;background:rgba(255,106,19,.12);color:#FFD7BD;font:700 12.5px var(--font-body);text-align:left;cursor:pointer;}
   .robot-guide-help:hover{background:var(--orange);border-color:var(--orange);color:#fff;}
